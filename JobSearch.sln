@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSearch.Web", "JobSearch.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSearch.Tests", "JobSearch.Tests\JobSearch.Tests.csproj", "{645727BA-0975-4B3E-867C-224A1B8ADFB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSearch.Core", "JobSearch.Core\JobSearch.Core.csproj", "{6015BEEE-92DC-4048-A870-1AE8730CF842}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSearch.Data", "JobSearch.Data\JobSearch.Data.csproj", "{78B2B30D-D2D7-4EBD-9964-45425CDF608A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{645727BA-0975-4B3E-867C-224A1B8ADFB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{645727BA-0975-4B3E-867C-224A1B8ADFB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{645727BA-0975-4B3E-867C-224A1B8ADFB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6015BEEE-92DC-4048-A870-1AE8730CF842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6015BEEE-92DC-4048-A870-1AE8730CF842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6015BEEE-92DC-4048-A870-1AE8730CF842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6015BEEE-92DC-4048-A870-1AE8730CF842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78B2B30D-D2D7-4EBD-9964-45425CDF608A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78B2B30D-D2D7-4EBD-9964-45425CDF608A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78B2B30D-D2D7-4EBD-9964-45425CDF608A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78B2B30D-D2D7-4EBD-9964-45425CDF608A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

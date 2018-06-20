@@ -46,11 +46,12 @@
         </EntityType>
         <EntityType Name="Employee_Searches">
           <Key>
-            <PropertyRef Name="JobId" />
-            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="JobId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SearchDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Job_Reviews">
           <Key>
@@ -102,7 +103,7 @@
           <Property Name="JobId" Type="int" Nullable="false" />
           <Property Name="DateHired" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Employee___JobId__59FA5E80">
+        <Association Name="FK__Employee___JobId__74AE54BC">
           <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
           <End Role="Employee_Searches" Type="Self.Employee_Searches" Multiplicity="*" />
           <ReferentialConstraint>
@@ -150,7 +151,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Employee___UserI__5AEE82B9">
+        <Association Name="FK__Employee___UserI__75A278F5">
           <End Role="Employee_Login" Type="Self.Employee_Login" Multiplicity="1" />
           <End Role="Employee_Searches" Type="Self.Employee_Searches" Multiplicity="*" />
           <ReferentialConstraint>
@@ -305,7 +306,7 @@
           <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jobs_Applied" EntityType="Self.Jobs_Applied" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jobs_Hired" EntityType="Self.Jobs_Hired" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Employee___JobId__59FA5E80" Association="Self.FK__Employee___JobId__59FA5E80">
+          <AssociationSet Name="FK__Employee___JobId__74AE54BC" Association="Self.FK__Employee___JobId__74AE54BC">
             <End Role="Jobs" EntitySet="Jobs" />
             <End Role="Employee_Searches" EntitySet="Employee_Searches" />
           </AssociationSet>
@@ -321,7 +322,7 @@
             <End Role="Employee_Login" EntitySet="Employee_Login" />
             <End Role="Employee_Details" EntitySet="Employee_Details" />
           </AssociationSet>
-          <AssociationSet Name="FK__Employee___UserI__5AEE82B9" Association="Self.FK__Employee___UserI__5AEE82B9">
+          <AssociationSet Name="FK__Employee___UserI__75A278F5" Association="Self.FK__Employee___UserI__75A278F5">
             <End Role="Employee_Login" EntitySet="Employee_Login" />
             <End Role="Employee_Searches" EntitySet="Employee_Searches" />
           </AssociationSet>

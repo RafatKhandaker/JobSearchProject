@@ -1,0 +1,1 @@
+c:\users\sysadmin\GitProjects\JobSearch\JobSearch.Web\obj\Debug\JobSearch.Web.csprojResolveAssemblyReference.cache
