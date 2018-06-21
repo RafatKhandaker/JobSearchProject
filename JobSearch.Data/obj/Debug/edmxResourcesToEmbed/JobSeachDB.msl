@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="JobSearchDBModelStoreContainer" CdmEntityContainer="JobSearchDBEntities">
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="JobSearchDBModel.Companies">
+        <MappingFragment StoreEntitySet="Companies">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Details">
+      <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Details">
+        <MappingFragment StoreEntitySet="Employee_Details">
+          <ScalarProperty Name="SignUpDate" ColumnName="SignUpDate" />
+          <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Login">
+      <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Login">
+        <MappingFragment StoreEntitySet="Employee_Login">
+          <ScalarProperty Name="TwoFKey" ColumnName="TwoFKey" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Job_Reviews">
+      <EntityTypeMapping TypeName="JobSearchDBModel.Job_Reviews">
+        <MappingFragment StoreEntitySet="Job_Reviews">
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Job_Type">
+      <EntityTypeMapping TypeName="JobSearchDBModel.Job_Type">
+        <MappingFragment StoreEntitySet="Job_Type">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jobs">
+      <EntityTypeMapping TypeName="JobSearchDBModel.Jobs">
+        <MappingFragment StoreEntitySet="Jobs">
+          <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+          <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="JobTypeId" ColumnName="JobTypeId" />
+          <ScalarProperty Name="JobName" ColumnName="JobName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jobs_Applied">
+      <EntityTypeMapping TypeName="JobSearchDBModel.Jobs_Applied">
+        <MappingFragment StoreEntitySet="Jobs_Applied">
+          <ScalarProperty Name="DateApplied" ColumnName="DateApplied" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jobs_Hired">
+      <EntityTypeMapping TypeName="JobSearchDBModel.Jobs_Hired">
+        <MappingFragment StoreEntitySet="Jobs_Hired">
+          <ScalarProperty Name="DateHired" ColumnName="DateHired" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Employee_Searches" TypeName="JobSearchDBModel.Employee_Searches" StoreEntitySet="Employee_Searches">
+      <EndProperty Name="Employee_Login">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="Jobs">
+        <ScalarProperty Name="Id" ColumnName="JobId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="Employee_Roles">
+      <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Roles">
+        <MappingFragment StoreEntitySet="Employee_Roles">
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

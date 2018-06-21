@@ -1,0 +1,10 @@
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Data\bin\Debug\JobSearch.Data.dll.config
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Data\bin\Debug\JobSearch.Data.dll
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Data\bin\Debug\JobSearch.Data.pdb
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Data\bin\Debug\EntityFramework.dll
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Data\bin\Debug\EntityFramework.xml
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Data\obj\Debug\JobSearch.Data.csprojResolveAssemblyReference.cache
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Data\obj\Debug\JobSearch.Data.dll
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Data\obj\Debug\JobSearch.Data.pdb

@@ -32,3 +32,10 @@ c:\users\sysadmin\GitProjects\JobSearch\JobSearch.Core\bin\Debug\System.Web.Razo
 c:\users\sysadmin\GitProjects\JobSearch\JobSearch.Core\bin\Debug\System.Web.WebPages.xml
 c:\users\sysadmin\GitProjects\JobSearch\JobSearch.Core\bin\Debug\System.Web.WebPages.Deployment.xml
 c:\users\sysadmin\GitProjects\JobSearch\JobSearch.Core\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Core\bin\Debug\JobSearch.Core.dll.config
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Core\bin\Debug\EntityFramework.dll
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Core\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Core\bin\Debug\JobSearch.Data.dll
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Core\bin\Debug\JobSearch.Data.pdb
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Core\bin\Debug\EntityFramework.xml
+C:\Users\SysAdmin\GitProjects\JobSearch\JobSearch.Core\bin\Debug\EntityFramework.SqlServer.xml

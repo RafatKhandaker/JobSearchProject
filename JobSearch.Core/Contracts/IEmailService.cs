@@ -8,6 +8,8 @@ namespace JobSearch.Core.Contracts
 {
     public interface IEmailService
     {
-        void SendTwoFactorKey( int id );
+        void AddRecipientId( string email );
+
+        void SendVerificationLink();
     }
 }
