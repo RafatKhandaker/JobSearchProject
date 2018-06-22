@@ -1,5 +1,6 @@
 ﻿using JobSearch.Core;
 using JobSearch.Core.Contracts;
+using JobSearch.Core.Factories;
 using System;
 using System.Web.Mvc;
 using Unity;
@@ -48,6 +49,8 @@ namespace JobSearch.Web
             container.RegisterType<IDBService, DataTask>();
             container.RegisterType<IEmailService, EmailTask>();
             container.RegisterType<IRestService, DataTask>();
+            container.RegisterType<IMessageFactory, EmailBuilder>();
+
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

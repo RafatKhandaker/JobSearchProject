@@ -31,10 +31,12 @@ namespace JobSearch.Core
         }
 
 
-        public void AddRecipientId( string email )
+        public EmailTask AddRecipientId( string email, Guid? key )
         {
-            this._EmailBuilder = new EmailBuilder( email );
+            this._EmailBuilder = new EmailBuilder( email, key );
             this.message = this._EmailBuilder.BuildMessage();
+
+            return this;
         }
 
         public void SendVerificationLink()

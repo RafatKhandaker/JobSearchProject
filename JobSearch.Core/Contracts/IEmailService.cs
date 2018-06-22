@@ -8,7 +8,7 @@ namespace JobSearch.Core.Contracts
 {
     public interface IEmailService
     {
-        void AddRecipientId( string email );
+        EmailTask AddRecipientId( string email, Guid? key );
 
         void SendVerificationLink();
     }

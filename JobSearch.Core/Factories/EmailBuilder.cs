@@ -1,5 +1,5 @@
 ﻿using JobSearch.Core.Contracts;
-
+using System;
 using System.Configuration;
 using System.Net.Mail;
 
@@ -13,12 +13,12 @@ namespace JobSearch.Core.Factories
         private readonly string body;
         
 
-        public EmailBuilder( string recipient )
+        public EmailBuilder( string recipient , Guid? key)
         {
             this.recipient = recipient;
             this.fromAddress = ConfigurationManager.AppSettings["ApplicationEmail"].ToString();
             this.subject = ConfigurationManager.AppSettings["MailSubject"].ToString();
-            this.body = ConfigurationManager.AppSettings["MailBody"].ToString();
+            this.body = ConfigurationManager.AppSettings["MailBody"].ToString() +key;
         }
 
         public MailMessage BuildMessage()

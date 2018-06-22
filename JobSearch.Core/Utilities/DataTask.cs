@@ -21,7 +21,14 @@ namespace JobSearch.Core
         // IDBService Implements
         public void ExecuteTwoFactorTask(int id)
         {
-            throw new NotImplementedException();
+            var query = DB.Employee_Details.Where(w => w.LoginId == id);
+            try
+            {
+                _EmailService
+                    .AddRecipientId( query.Select(s => s.Email).FirstOrDefault() , query.Select(s => s.Employee_Login.TwoFKey).FirstOrDefault()  )
+                    .SendVerificationLink();
+            }
+            catch (Exception e) { throw e; }
         }
 
         public int RetrieveLoginId(string user, string password)
@@ -32,7 +39,7 @@ namespace JobSearch.Core
                     DB.Employee_Login.Where(w => w.Username == user && w.Password == password).Select(s => s.Id)
                     );
             }
-            catch (Exception e) { throw new UnauthorizedAccessException();  }
+            catch (Exception e) { throw e;  }
         }
 
 
