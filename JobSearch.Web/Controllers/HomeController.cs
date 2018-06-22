@@ -12,6 +12,8 @@ namespace JobSearch.Web.Controllers
             this._DataTask = _DataTask;
         }
 
+        public HomeController() { }
+
         [HttpGet]
         public ActionResult Index()
         {

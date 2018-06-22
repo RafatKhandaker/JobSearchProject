@@ -21,15 +21,18 @@ namespace JobSearch.Core
         // IDBService Implements
         public void ExecuteTwoFactorTask(int id)
         {
-            
-                throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public int RetrieveLoginId(string user, string password)
         {
-            return Convert.ToInt32( 
-                DB.Employee_Login.Where(w => w.Username == user && w.Password == password).Select(s => s.Id) 
-                );
+            try
+            {
+                return Convert.ToInt32(
+                    DB.Employee_Login.Where(w => w.Username == user && w.Password == password).Select(s => s.Id)
+                    );
+            }
+            catch (Exception e) { throw new UnauthorizedAccessException();  }
         }
 
 

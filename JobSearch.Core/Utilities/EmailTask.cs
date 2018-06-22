@@ -1,9 +1,9 @@
-﻿using System;
-using JobSearch.Core.Contracts;
+﻿using JobSearch.Core.Contracts;
 using JobSearch.Core.Factories;
 using System.Net.Mail;
 using System.Net;
 using System.Configuration;
+using System;
 
 namespace JobSearch.Core
 {
@@ -39,7 +39,14 @@ namespace JobSearch.Core
 
         public void SendVerificationLink()
         {
-            this.smtp.SendMailAsync( this.message );
+            try
+            {
+                this.smtp.SendMailAsync(this.message);
+            }
+            catch (Exception e)
+            {
+                
+            }
         }
     }
 }
