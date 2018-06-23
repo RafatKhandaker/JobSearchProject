@@ -48,8 +48,9 @@ namespace JobSearch.Web
 
             container.RegisterType<IDBService, DataTask>();
             container.RegisterType<IEmailService, EmailTask>();
-            container.RegisterType<IRestService, DataTask>();
             container.RegisterType<IMessageFactory, EmailBuilder>();
+            container.RegisterType<IRestService, DataTask>();
+
 
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));

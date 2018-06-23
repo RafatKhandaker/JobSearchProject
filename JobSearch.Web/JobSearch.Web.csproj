@@ -238,8 +238,8 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
-    <Compile Include="Controllers\APIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -309,6 +309,10 @@
     <ProjectReference Include="..\JobSearch.Core\JobSearch.Core.csproj">
       <Project>{6015beee-92dc-4048-a870-1ae8730cf842}</Project>
       <Name>JobSearch.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JobSearch.Data\JobSearch.Data.csproj">
+      <Project>{78B2B30D-D2D7-4EBD-9964-45425CDF608A}</Project>
+      <Name>JobSearch.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -47,7 +47,7 @@ namespace JobSearch.Core
             }
             catch (Exception e)
             {
-                
+                throw e;
             }
         }
     }
