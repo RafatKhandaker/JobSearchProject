@@ -103,8 +103,6 @@
           <Property Name="JobId" Type="int" Nullable="false" />
           <Property Name="DateHired" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Association Name="FK__Employee___JobId__74AE54BC">
           <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
           <End Role="Employee_Searches" Type="Self.Employee_Searches" Multiplicity="*" />
@@ -381,6 +379,8 @@ warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not 
           <EntitySet Name="Companies" EntityType="JobSearchDBModel.Companies" />
           <EntitySet Name="Employee_Details" EntityType="JobSearchDBModel.Employee_Details" />
           <EntitySet Name="Employee_Login" EntityType="JobSearchDBModel.Employee_Login" />
+          <EntitySet Name="Employee_Roles" EntityType="JobSearchDBModel.Employee_Roles" />
+          <EntitySet Name="Employee_Searches" EntityType="JobSearchDBModel.Employee_Searches" />
           <EntitySet Name="Job_Reviews" EntityType="JobSearchDBModel.Job_Reviews" />
           <EntitySet Name="Job_Type" EntityType="JobSearchDBModel.Job_Type" />
           <EntitySet Name="Jobs" EntityType="JobSearchDBModel.Jobs" />
@@ -410,6 +410,14 @@ warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not 
             <End Role="Employee_Login" EntitySet="Employee_Login" />
             <End Role="Employee_Details" EntitySet="Employee_Details" />
           </AssociationSet>
+          <AssociationSet Name="FK__Employee___Login__4BAC3F29" Association="JobSearchDBModel.FK__Employee___Login__4BAC3F29">
+            <End Role="Employee_Login" EntitySet="Employee_Login" />
+            <End Role="Employee_Roles" EntitySet="Employee_Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee___UserI__75A278F5" Association="JobSearchDBModel.FK__Employee___UserI__75A278F5">
+            <End Role="Employee_Login" EntitySet="Employee_Login" />
+            <End Role="Employee_Searches" EntitySet="Employee_Searches" />
+          </AssociationSet>
           <AssociationSet Name="FK__Job_Revie__Emplo__6754599E" Association="JobSearchDBModel.FK__Job_Revie__Emplo__6754599E">
             <End Role="Employee_Login" EntitySet="Employee_Login" />
             <End Role="Job_Reviews" EntitySet="Job_Reviews" />
@@ -421,6 +429,10 @@ warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not 
           <AssociationSet Name="FK__Jobs_Hire__Emplo__628FA481" Association="JobSearchDBModel.FK__Jobs_Hire__Emplo__628FA481">
             <End Role="Employee_Login" EntitySet="Employee_Login" />
             <End Role="Jobs_Hired" EntitySet="Jobs_Hired" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee___JobId__74AE54BC" Association="JobSearchDBModel.FK__Employee___JobId__74AE54BC">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="Employee_Searches" EntitySet="Employee_Searches" />
           </AssociationSet>
           <AssociationSet Name="FK__Job_Revie__JobId__693CA210" Association="JobSearchDBModel.FK__Job_Revie__JobId__693CA210">
             <End Role="Jobs" EntitySet="Jobs" />
@@ -437,15 +449,6 @@ warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not 
           <AssociationSet Name="FK__Jobs_Hire__JobId__6477ECF3" Association="JobSearchDBModel.FK__Jobs_Hire__JobId__6477ECF3">
             <End Role="Jobs" EntitySet="Jobs" />
             <End Role="Jobs_Hired" EntitySet="Jobs_Hired" />
-          </AssociationSet>
-          <AssociationSet Name="Employee_Searches" Association="JobSearchDBModel.Employee_Searches">
-            <End Role="Jobs" EntitySet="Jobs" />
-            <End Role="Employee_Login" EntitySet="Employee_Login" />
-          </AssociationSet>
-          <EntitySet Name="Employee_Roles" EntityType="JobSearchDBModel.Employee_Roles" />
-          <AssociationSet Name="FK__Employee___Login__4BAC3F29" Association="JobSearchDBModel.FK__Employee___Login__4BAC3F29">
-            <End Role="Employee_Login" EntitySet="Employee_Login" />
-            <End Role="Employee_Roles" EntitySet="Employee_Roles" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Companies">
@@ -485,11 +488,31 @@ warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not 
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="TwoFKey" Type="Guid" />
           <NavigationProperty Name="Employee_Details" Relationship="JobSearchDBModel.FK__Employee___Login__5070F446" FromRole="Employee_Login" ToRole="Employee_Details" />
+          <NavigationProperty Name="Employee_Roles" Relationship="JobSearchDBModel.FK__Employee___Login__4BAC3F29" FromRole="Employee_Login" ToRole="Employee_Roles" />
+          <NavigationProperty Name="Employee_Searches" Relationship="JobSearchDBModel.FK__Employee___UserI__75A278F5" FromRole="Employee_Login" ToRole="Employee_Searches" />
           <NavigationProperty Name="Job_Reviews" Relationship="JobSearchDBModel.FK__Job_Revie__Emplo__6754599E" FromRole="Employee_Login" ToRole="Job_Reviews" />
           <NavigationProperty Name="Jobs_Applied" Relationship="JobSearchDBModel.FK__Jobs_Appl__Appli__5DCAEF64" FromRole="Employee_Login" ToRole="Jobs_Applied" />
           <NavigationProperty Name="Jobs_Hired" Relationship="JobSearchDBModel.FK__Jobs_Hire__Emplo__628FA481" FromRole="Employee_Login" ToRole="Jobs_Hired" />
-          <NavigationProperty Name="Jobs" Relationship="JobSearchDBModel.Employee_Searches" FromRole="Employee_Login" ToRole="Jobs" />
-          <NavigationProperty Name="Employee_Roles" Relationship="JobSearchDBModel.FK__Employee___Login__4BAC3F29" FromRole="Employee_Login" ToRole="Employee_Roles" />
+        </EntityType>
+        <EntityType Name="Employee_Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginId" Type="Int32" Nullable="false" />
+          <Property Name="Rolename" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.FK__Employee___Login__4BAC3F29" FromRole="Employee_Roles" ToRole="Employee_Login" />
+        </EntityType>
+        <EntityType Name="Employee_Searches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SearchDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.FK__Employee___UserI__75A278F5" FromRole="Employee_Searches" ToRole="Employee_Login" />
+          <NavigationProperty Name="Jobs" Relationship="JobSearchDBModel.FK__Employee___JobId__74AE54BC" FromRole="Employee_Searches" ToRole="Jobs" />
         </EntityType>
         <EntityType Name="Job_Reviews">
           <Key>
@@ -526,11 +549,11 @@ warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not 
           <Property Name="JobDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DatePosted" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Companies" Relationship="JobSearchDBModel.FK__Jobs__CompanyId__571DF1D5" FromRole="Jobs" ToRole="Companies" />
+          <NavigationProperty Name="Employee_Searches" Relationship="JobSearchDBModel.FK__Employee___JobId__74AE54BC" FromRole="Jobs" ToRole="Employee_Searches" />
           <NavigationProperty Name="Job_Reviews" Relationship="JobSearchDBModel.FK__Job_Revie__JobId__693CA210" FromRole="Jobs" ToRole="Job_Reviews" />
           <NavigationProperty Name="Job_Type" Relationship="JobSearchDBModel.FK__Jobs__JobTypeId__5629CD9C" FromRole="Jobs" ToRole="Job_Type" />
           <NavigationProperty Name="Jobs_Applied" Relationship="JobSearchDBModel.FK__Jobs_Appl__JobId__5FB337D6" FromRole="Jobs" ToRole="Jobs_Applied" />
           <NavigationProperty Name="Jobs_Hired" Relationship="JobSearchDBModel.FK__Jobs_Hire__JobId__6477ECF3" FromRole="Jobs" ToRole="Jobs_Hired" />
-          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.Employee_Searches" FromRole="Jobs" ToRole="Employee_Login" />
         </EntityType>
         <EntityType Name="Jobs_Applied">
           <Key>
@@ -630,6 +653,30 @@ warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Employee___Login__4BAC3F29">
+          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Employee_Roles" Role="Employee_Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Login">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Roles">
+              <PropertyRef Name="LoginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee___UserI__75A278F5">
+          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Employee_Searches" Role="Employee_Searches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Login">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Searches">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Job_Revie__Emplo__6754599E">
           <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
           <End Type="JobSearchDBModel.Job_Reviews" Role="Job_Reviews" Multiplicity="*" />
@@ -663,6 +710,18 @@ warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not 
             </Principal>
             <Dependent Role="Jobs_Hired">
               <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee___JobId__74AE54BC">
+          <End Type="JobSearchDBModel.Jobs" Role="Jobs" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Employee_Searches" Role="Employee_Searches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Searches">
+              <PropertyRef Name="JobId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -714,32 +773,7 @@ warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Employee_Searches">
-          <End Type="JobSearchDBModel.Jobs" Role="Jobs" Multiplicity="*" />
-          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="*" />
-        </Association>
-        <EntityType Name="Employee_Roles">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LoginId" Type="Int32" Nullable="false" />
-          <Property Name="Rolename" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.FK__Employee___Login__4BAC3F29" FromRole="Employee_Roles" ToRole="Employee_Login" />
-        </EntityType>
-        <Association Name="FK__Employee___Login__4BAC3F29">
-          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
-          <End Type="JobSearchDBModel.Employee_Roles" Role="Employee_Roles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee_Login">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Employee_Roles">
-              <PropertyRef Name="LoginId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -775,6 +809,25 @@ warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not 
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Roles">
+            <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Roles">
+              <MappingFragment StoreEntitySet="Employee_Roles">
+                <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Searches">
+            <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Searches">
+              <MappingFragment StoreEntitySet="Employee_Searches">
+                <ScalarProperty Name="SearchDate" ColumnName="SearchDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -830,23 +883,6 @@ warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not 
                 <ScalarProperty Name="JobId" ColumnName="JobId" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="Employee_Searches" TypeName="JobSearchDBModel.Employee_Searches" StoreEntitySet="Employee_Searches">
-            <EndProperty Name="Employee_Login">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="Jobs">
-              <ScalarProperty Name="Id" ColumnName="JobId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="Employee_Roles">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Roles">
-              <MappingFragment StoreEntitySet="Employee_Roles">
-                <ScalarProperty Name="Rolename" ColumnName="Rolename" />
-                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

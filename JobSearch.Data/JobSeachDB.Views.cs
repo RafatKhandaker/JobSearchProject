@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(JobSearch.Data.JobSearchDBEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsba186eb212ffaf8ed8b4b3cf9f1513b9f65ad0642e7ddb4a1b7694716588ac02))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsa82cd917702d34d7010f369f77944741d6c9b930f929627f27fbe46312db1906))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework 6 Power Tools", "0.9.2.0")]
-    internal sealed class ViewsForBaseEntitySetsba186eb212ffaf8ed8b4b3cf9f1513b9f65ad0642e7ddb4a1b7694716588ac02 : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySetsa82cd917702d34d7010f369f77944741d6c9b930f929627f27fbe46312db1906 : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "ba186eb212ffaf8ed8b4b3cf9f1513b9f65ad0642e7ddb4a1b7694716588ac02"; }
+            get { return "a82cd917702d34d7010f369f77944741d6c9b930f929627f27fbe46312db1906"; }
         }
 
         /// <summary>
@@ -62,37 +62,37 @@ namespace Edm_EntityMappingGeneratedViews
                 return GetView2();
             }
 
-            if (extentName == "JobSearchDBModelStoreContainer.Job_Reviews")
+            if (extentName == "JobSearchDBModelStoreContainer.Employee_Roles")
             {
                 return GetView3();
             }
 
-            if (extentName == "JobSearchDBModelStoreContainer.Job_Type")
+            if (extentName == "JobSearchDBModelStoreContainer.Employee_Searches")
             {
                 return GetView4();
             }
 
-            if (extentName == "JobSearchDBModelStoreContainer.Jobs")
+            if (extentName == "JobSearchDBModelStoreContainer.Job_Reviews")
             {
                 return GetView5();
             }
 
-            if (extentName == "JobSearchDBModelStoreContainer.Jobs_Applied")
+            if (extentName == "JobSearchDBModelStoreContainer.Job_Type")
             {
                 return GetView6();
             }
 
-            if (extentName == "JobSearchDBModelStoreContainer.Jobs_Hired")
+            if (extentName == "JobSearchDBModelStoreContainer.Jobs")
             {
                 return GetView7();
             }
 
-            if (extentName == "JobSearchDBModelStoreContainer.Employee_Roles")
+            if (extentName == "JobSearchDBModelStoreContainer.Jobs_Applied")
             {
                 return GetView8();
             }
 
-            if (extentName == "JobSearchDBModelStoreContainer.Employee_Searches")
+            if (extentName == "JobSearchDBModelStoreContainer.Jobs_Hired")
             {
                 return GetView9();
             }
@@ -112,37 +112,37 @@ namespace Edm_EntityMappingGeneratedViews
                 return GetView12();
             }
 
-            if (extentName == "JobSearchDBEntities.Job_Reviews")
+            if (extentName == "JobSearchDBEntities.Employee_Roles")
             {
                 return GetView13();
             }
 
-            if (extentName == "JobSearchDBEntities.Job_Type")
+            if (extentName == "JobSearchDBEntities.Employee_Searches")
             {
                 return GetView14();
             }
 
-            if (extentName == "JobSearchDBEntities.Jobs")
+            if (extentName == "JobSearchDBEntities.Job_Reviews")
             {
                 return GetView15();
             }
 
-            if (extentName == "JobSearchDBEntities.Jobs_Applied")
+            if (extentName == "JobSearchDBEntities.Job_Type")
             {
                 return GetView16();
             }
 
-            if (extentName == "JobSearchDBEntities.Jobs_Hired")
+            if (extentName == "JobSearchDBEntities.Jobs")
             {
                 return GetView17();
             }
 
-            if (extentName == "JobSearchDBEntities.Employee_Roles")
+            if (extentName == "JobSearchDBEntities.Jobs_Applied")
             {
                 return GetView18();
             }
 
-            if (extentName == "JobSearchDBEntities.Employee_Searches")
+            if (extentName == "JobSearchDBEntities.Jobs_Hired")
             {
                 return GetView19();
             }
@@ -215,10 +215,49 @@ namespace Edm_EntityMappingGeneratedViews
         }
 
         /// <summary>
-        /// Gets the view for JobSearchDBModelStoreContainer.Job_Reviews.
+        /// Gets the view for JobSearchDBModelStoreContainer.Employee_Roles.
         /// </summary>
         /// <returns>The mapping view.</returns>
         private static DbMappingView GetView3()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing Employee_Roles
+        [JobSearchDBModel.Store.Employee_Roles](T1.[Employee_Roles.Id], T1.[Employee_Roles.LoginId], T1.[Employee_Roles.Rolename])
+    FROM (
+        SELECT 
+            T.Id AS [Employee_Roles.Id], 
+            T.LoginId AS [Employee_Roles.LoginId], 
+            T.Rolename AS [Employee_Roles.Rolename], 
+            True AS _from0
+        FROM JobSearchDBEntities.Employee_Roles AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for JobSearchDBModelStoreContainer.Employee_Searches.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView4()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing Employee_Searches
+        [JobSearchDBModel.Store.Employee_Searches](T1.[Employee_Searches.Id], T1.[Employee_Searches.JobId], T1.[Employee_Searches.UserId], T1.[Employee_Searches.SearchDate])
+    FROM (
+        SELECT 
+            T.Id AS [Employee_Searches.Id], 
+            T.JobId AS [Employee_Searches.JobId], 
+            T.UserId AS [Employee_Searches.UserId], 
+            T.SearchDate AS [Employee_Searches.SearchDate], 
+            True AS _from0
+        FROM JobSearchDBEntities.Employee_Searches AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for JobSearchDBModelStoreContainer.Job_Reviews.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView5()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Job_Reviews
@@ -241,7 +280,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for JobSearchDBModelStoreContainer.Job_Type.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView4()
+        private static DbMappingView GetView6()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Job_Type
@@ -259,7 +298,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for JobSearchDBModelStoreContainer.Jobs.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView5()
+        private static DbMappingView GetView7()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Jobs
@@ -281,7 +320,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for JobSearchDBModelStoreContainer.Jobs_Applied.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView6()
+        private static DbMappingView GetView8()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Jobs_Applied
@@ -302,7 +341,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for JobSearchDBModelStoreContainer.Jobs_Hired.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView7()
+        private static DbMappingView GetView9()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Jobs_Hired
@@ -316,43 +355,6 @@ namespace Edm_EntityMappingGeneratedViews
             T.DateHired AS [Jobs_Hired.DateHired], 
             True AS _from0
         FROM JobSearchDBEntities.Jobs_Hired AS T
-    ) AS T1");
-        }
-
-        /// <summary>
-        /// Gets the view for JobSearchDBModelStoreContainer.Employee_Roles.
-        /// </summary>
-        /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView8()
-        {
-            return new DbMappingView(@"
-    SELECT VALUE -- Constructing Employee_Roles
-        [JobSearchDBModel.Store.Employee_Roles](T1.[Employee_Roles.Id], T1.[Employee_Roles.LoginId], T1.[Employee_Roles.Rolename])
-    FROM (
-        SELECT 
-            T.Id AS [Employee_Roles.Id], 
-            T.LoginId AS [Employee_Roles.LoginId], 
-            T.Rolename AS [Employee_Roles.Rolename], 
-            True AS _from0
-        FROM JobSearchDBEntities.Employee_Roles AS T
-    ) AS T1");
-        }
-
-        /// <summary>
-        /// Gets the view for JobSearchDBModelStoreContainer.Employee_Searches.
-        /// </summary>
-        /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView9()
-        {
-            return new DbMappingView(@"
-    SELECT VALUE -- Constructing Employee_Searches
-        [JobSearchDBModel.Store.Employee_Searches](T1.[Employee_Searches.JobId], T1.[Employee_Searches.UserId])
-    FROM (
-        SELECT 
-            Key(T.Jobs).Id AS [Employee_Searches.JobId], 
-            Key(T.Employee_Login).Id AS [Employee_Searches.UserId], 
-            True AS _from0
-        FROM JobSearchDBEntities.Employee_Searches AS T
     ) AS T1");
         }
 
@@ -421,10 +423,49 @@ namespace Edm_EntityMappingGeneratedViews
         }
 
         /// <summary>
-        /// Gets the view for JobSearchDBEntities.Job_Reviews.
+        /// Gets the view for JobSearchDBEntities.Employee_Roles.
         /// </summary>
         /// <returns>The mapping view.</returns>
         private static DbMappingView GetView13()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing Employee_Roles
+        [JobSearchDBModel.Employee_Roles](T1.[Employee_Roles.Id], T1.[Employee_Roles.LoginId], T1.[Employee_Roles.Rolename])
+    FROM (
+        SELECT 
+            T.Id AS [Employee_Roles.Id], 
+            T.LoginId AS [Employee_Roles.LoginId], 
+            T.Rolename AS [Employee_Roles.Rolename], 
+            True AS _from0
+        FROM JobSearchDBModelStoreContainer.Employee_Roles AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for JobSearchDBEntities.Employee_Searches.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView14()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing Employee_Searches
+        [JobSearchDBModel.Employee_Searches](T1.[Employee_Searches.Id], T1.[Employee_Searches.JobId], T1.[Employee_Searches.UserId], T1.[Employee_Searches.SearchDate])
+    FROM (
+        SELECT 
+            T.Id AS [Employee_Searches.Id], 
+            T.JobId AS [Employee_Searches.JobId], 
+            T.UserId AS [Employee_Searches.UserId], 
+            T.SearchDate AS [Employee_Searches.SearchDate], 
+            True AS _from0
+        FROM JobSearchDBModelStoreContainer.Employee_Searches AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for JobSearchDBEntities.Job_Reviews.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView15()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Job_Reviews
@@ -447,7 +488,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for JobSearchDBEntities.Job_Type.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView14()
+        private static DbMappingView GetView16()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Job_Type
@@ -465,7 +506,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for JobSearchDBEntities.Jobs.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView15()
+        private static DbMappingView GetView17()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Jobs
@@ -487,7 +528,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for JobSearchDBEntities.Jobs_Applied.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView16()
+        private static DbMappingView GetView18()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Jobs_Applied
@@ -508,7 +549,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for JobSearchDBEntities.Jobs_Hired.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView17()
+        private static DbMappingView GetView19()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Jobs_Hired
@@ -523,53 +564,6 @@ namespace Edm_EntityMappingGeneratedViews
             True AS _from0
         FROM JobSearchDBModelStoreContainer.Jobs_Hired AS T
     ) AS T1");
-        }
-
-        /// <summary>
-        /// Gets the view for JobSearchDBEntities.Employee_Roles.
-        /// </summary>
-        /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView18()
-        {
-            return new DbMappingView(@"
-    SELECT VALUE -- Constructing Employee_Roles
-        [JobSearchDBModel.Employee_Roles](T1.[Employee_Roles.Id], T1.[Employee_Roles.LoginId], T1.[Employee_Roles.Rolename])
-    FROM (
-        SELECT 
-            T.Id AS [Employee_Roles.Id], 
-            T.LoginId AS [Employee_Roles.LoginId], 
-            T.Rolename AS [Employee_Roles.Rolename], 
-            True AS _from0
-        FROM JobSearchDBModelStoreContainer.Employee_Roles AS T
-    ) AS T1");
-        }
-
-        /// <summary>
-        /// Gets the view for JobSearchDBEntities.Employee_Searches.
-        /// </summary>
-        /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView19()
-        {
-            return new DbMappingView(@"
-    SELECT VALUE -- Constructing Employee_Searches
-        [JobSearchDBModel.Employee_Searches](T3.[Employee_Searches.Jobs], T3.[Employee_Searches.Employee_Login])
-    FROM (
-        SELECT -- Constructing Jobs
-            CreateRef(JobSearchDBEntities.Jobs, row(T2.[Employee_Searches.Jobs.Id]), [JobSearchDBModel.Jobs]) AS [Employee_Searches.Jobs], 
-            T2.[Employee_Searches.Employee_Login]
-        FROM (
-            SELECT -- Constructing Employee_Login
-                T1.[Employee_Searches.Jobs.Id], 
-                CreateRef(JobSearchDBEntities.Employee_Login, row(T1.[Employee_Searches.Employee_Login.Id]), [JobSearchDBModel.Employee_Login]) AS [Employee_Searches.Employee_Login]
-            FROM (
-                SELECT 
-                    T.JobId AS [Employee_Searches.Jobs.Id], 
-                    T.UserId AS [Employee_Searches.Employee_Login.Id], 
-                    True AS _from0
-                FROM JobSearchDBModelStoreContainer.Employee_Searches AS T
-            ) AS T1
-        ) AS T2
-    ) AS T3");
         }
     }
 }

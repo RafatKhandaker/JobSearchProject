@@ -18,11 +18,11 @@ namespace JobSearch.Data
         public Employee_Login()
         {
             this.Employee_Details = new HashSet<Employee_Details>();
+            this.Employee_Roles = new HashSet<Employee_Roles>();
+            this.Employee_Searches = new HashSet<Employee_Searches>();
             this.Job_Reviews = new HashSet<Job_Reviews>();
             this.Jobs_Applied = new HashSet<Jobs_Applied>();
             this.Jobs_Hired = new HashSet<Jobs_Hired>();
-            this.Jobs = new HashSet<Jobs>();
-            this.Employee_Roles = new HashSet<Employee_Roles>();
         }
     
         public int Id { get; set; }
@@ -34,14 +34,14 @@ namespace JobSearch.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee_Details> Employee_Details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee_Roles> Employee_Roles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee_Searches> Employee_Searches { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Job_Reviews> Job_Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Jobs_Applied> Jobs_Applied { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Jobs_Hired> Jobs_Hired { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Jobs> Jobs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee_Roles> Employee_Roles { get; set; }
     }
 }

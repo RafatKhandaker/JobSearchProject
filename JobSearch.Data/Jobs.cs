@@ -17,10 +17,10 @@ namespace JobSearch.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Jobs()
         {
+            this.Employee_Searches = new HashSet<Employee_Searches>();
             this.Job_Reviews = new HashSet<Job_Reviews>();
             this.Jobs_Applied = new HashSet<Jobs_Applied>();
             this.Jobs_Hired = new HashSet<Jobs_Hired>();
-            this.Employee_Login = new HashSet<Employee_Login>();
         }
     
         public int Id { get; set; }
@@ -32,13 +32,13 @@ namespace JobSearch.Data
     
         public virtual Companies Companies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee_Searches> Employee_Searches { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Job_Reviews> Job_Reviews { get; set; }
         public virtual Job_Type Job_Type { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Jobs_Applied> Jobs_Applied { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Jobs_Hired> Jobs_Hired { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee_Login> Employee_Login { get; set; }
     }
 }
