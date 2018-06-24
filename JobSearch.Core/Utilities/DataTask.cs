@@ -18,7 +18,7 @@ namespace JobSearch.Core
             this.DB = new JobSearchDBEntities();
         }
 
-        // IDBService Implements
+        /* IDBService Implements -- Casual Database flow task */
         public void ExecuteTwoFactorTask(int id)
         {
             var query = DB.Employee_Details.Where(w => w.LoginId == id);
@@ -49,25 +49,30 @@ namespace JobSearch.Core
         }
 
 
-        // IRestService Implements
+        /* IRestService Implements -- API Rest Controller */
         public IQueryable<Jobs> ReturnJobMarket()
         {
-            return DB.Jobs.Select(s => s);       
+            return DB.Jobs.Select(s => s).OrderByDescending(o => o.DatePosted).Take(10000);       
         }
 
         public IQueryable<Job_Reviews> ReturnJobReviews(int id)
         {
-            return DB.Job_Reviews.Where(w => w.JobId == id);
+            return DB.Job_Reviews.Where(w => w.JobId == id).OrderByDescending(o => o.Timestamp).Take(10000);
         }
 
         public IQueryable<Jobs_Applied> ReturnJobsApplied(int id)
         {
-            return DB.Jobs_Applied.Where(w => w.ApplicantId == id);
+            return DB.Jobs_Applied.Where(w => w.ApplicantId == id).OrderByDescending(o => o.DateApplied).Take(10000);
+        }
+
+        public IQueryable<Jobs> ReturnJobMarket(int companyId)
+        {
+            return DB.Jobs.Where(w => w.CompanyId == companyId).OrderByDescending(o => o.DatePosted).Take(10000);
         }
 
         public IQueryable<Jobs_Hired> ReturnJobsHired(int id)
         {
-            return DB.Jobs_Hired.Where(w => w.EmployeeId == id);
+            return DB.Jobs_Hired.Where(w => w.EmployeeId == id).OrderByDescending(o => o.DateHired).Take(10000);
         }
 
         public void Dispose()

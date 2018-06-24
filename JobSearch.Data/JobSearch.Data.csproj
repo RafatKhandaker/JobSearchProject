@@ -63,6 +63,9 @@
     <Compile Include="Employee_Roles.cs">
       <DependentUpon>JobSeachDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Employee_Searches.cs">
+      <DependentUpon>JobSeachDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Jobs.cs">
       <DependentUpon>JobSeachDB.tt</DependentUpon>
     </Compile>

@@ -98,8 +98,6 @@
     <Property Name="JobId" Type="int" Nullable="false" />
     <Property Name="DateHired" Type="datetime" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'JobSearchDB.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <Association Name="FK__Employee___JobId__74AE54BC">
     <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
     <End Role="Employee_Searches" Type="Self.Employee_Searches" Multiplicity="*" />
