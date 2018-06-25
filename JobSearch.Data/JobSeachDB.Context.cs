@@ -32,8 +32,11 @@ namespace JobSearch.Data
         public virtual DbSet<Employee_Searches> Employee_Searches { get; set; }
         public virtual DbSet<Job_Reviews> Job_Reviews { get; set; }
         public virtual DbSet<Job_Type> Job_Type { get; set; }
-        public virtual DbSet<Jobs> Jobs { get; set; }
         public virtual DbSet<Jobs_Applied> Jobs_Applied { get; set; }
         public virtual DbSet<Jobs_Hired> Jobs_Hired { get; set; }
+        public virtual DbSet<Job_Details> Job_Details { get; set; }
+        public virtual DbSet<Salary_Type> Salary_Type { get; set; }
+        public virtual DbSet<Work_Authorization_Type> Work_Authorization_Type { get; set; }
+        public virtual DbSet<Jobs> Jobs { get; set; }
     }
 }

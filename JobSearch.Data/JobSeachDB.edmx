@@ -53,6 +53,18 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="SearchDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Job_Details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" />
+          <Property Name="JobDescription" Type="varchar(max)" />
+          <Property Name="SalaryMin" Type="money" />
+          <Property Name="SalaryMax" Type="money" />
+          <Property Name="SalaryType" Type="int" Nullable="false" />
+          <Property Name="MinWorkAuthorization" Type="int" />
+        </EntityType>
         <EntityType Name="Job_Reviews">
           <Key>
             <PropertyRef Name="Id" />
@@ -80,7 +92,6 @@
           <Property Name="JobName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="JobTypeId" Type="int" Nullable="false" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
-          <Property Name="JobDescription" Type="varchar(max)" />
           <Property Name="DatePosted" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Jobs_Applied">
@@ -102,6 +113,20 @@
           <Property Name="CompanyId" Type="int" Nullable="false" />
           <Property Name="JobId" Type="int" Nullable="false" />
           <Property Name="DateHired" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Salary_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PayType" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Work_Authorization_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="25" />
         </EntityType>
         <Association Name="FK__Employee___JobId__74AE54BC">
           <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
@@ -160,6 +185,42 @@
             </Principal>
             <Dependent Role="Employee_Searches">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Detai__JobId__7C4F7684">
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="0..1" />
+          <End Role="Job_Details" Type="Self.Job_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Job_Details">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Detai__MinWo__7E37BEF6">
+          <End Role="Work_Authorization_Type" Type="Self.Work_Authorization_Type" Multiplicity="0..1" />
+          <End Role="Job_Details" Type="Self.Job_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Work_Authorization_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Job_Details">
+              <PropertyRef Name="MinWorkAuthorization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Detai__Salar__7D439ABD">
+          <End Role="Salary_Type" Type="Self.Salary_Type" Multiplicity="1" />
+          <End Role="Job_Details" Type="Self.Job_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salary_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Job_Details">
+              <PropertyRef Name="SalaryType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -301,11 +362,14 @@
           <EntitySet Name="Employee_Login" EntityType="Self.Employee_Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_Roles" EntityType="Self.Employee_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_Searches" EntityType="Self.Employee_Searches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job_Details" EntityType="Self.Job_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Job_Reviews" EntityType="Self.Job_Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Job_Type" EntityType="Self.Job_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jobs_Applied" EntityType="Self.Jobs_Applied" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jobs_Hired" EntityType="Self.Jobs_Hired" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Salary_Type" EntityType="Self.Salary_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Work_Authorization_Type" EntityType="Self.Work_Authorization_Type" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Employee___JobId__74AE54BC" Association="Self.FK__Employee___JobId__74AE54BC">
             <End Role="Jobs" EntitySet="Jobs" />
             <End Role="Employee_Searches" EntitySet="Employee_Searches" />
@@ -325,6 +389,18 @@
           <AssociationSet Name="FK__Employee___UserI__75A278F5" Association="Self.FK__Employee___UserI__75A278F5">
             <End Role="Employee_Login" EntitySet="Employee_Login" />
             <End Role="Employee_Searches" EntitySet="Employee_Searches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Detai__JobId__7C4F7684" Association="Self.FK__Job_Detai__JobId__7C4F7684">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="Job_Details" EntitySet="Job_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Detai__MinWo__7E37BEF6" Association="Self.FK__Job_Detai__MinWo__7E37BEF6">
+            <End Role="Work_Authorization_Type" EntitySet="Work_Authorization_Type" />
+            <End Role="Job_Details" EntitySet="Job_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Detai__Salar__7D439ABD" Association="Self.FK__Job_Detai__Salar__7D439ABD">
+            <End Role="Salary_Type" EntitySet="Salary_Type" />
+            <End Role="Job_Details" EntitySet="Job_Details" />
           </AssociationSet>
           <AssociationSet Name="FK__Job_Revie__Compa__68487DD7" Association="Self.FK__Job_Revie__Compa__68487DD7">
             <End Role="Companies" EntitySet="Companies" />
@@ -383,16 +459,11 @@
           <EntitySet Name="Employee_Searches" EntityType="JobSearchDBModel.Employee_Searches" />
           <EntitySet Name="Job_Reviews" EntityType="JobSearchDBModel.Job_Reviews" />
           <EntitySet Name="Job_Type" EntityType="JobSearchDBModel.Job_Type" />
-          <EntitySet Name="Jobs" EntityType="JobSearchDBModel.Jobs" />
           <EntitySet Name="Jobs_Applied" EntityType="JobSearchDBModel.Jobs_Applied" />
           <EntitySet Name="Jobs_Hired" EntityType="JobSearchDBModel.Jobs_Hired" />
           <AssociationSet Name="FK__Job_Revie__Compa__68487DD7" Association="JobSearchDBModel.FK__Job_Revie__Compa__68487DD7">
             <End Role="Companies" EntitySet="Companies" />
             <End Role="Job_Reviews" EntitySet="Job_Reviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Jobs__CompanyId__571DF1D5" Association="JobSearchDBModel.FK__Jobs__CompanyId__571DF1D5">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="Jobs" EntitySet="Jobs" />
           </AssociationSet>
           <AssociationSet Name="FK__Jobs_Appl__Compa__5EBF139D" Association="JobSearchDBModel.FK__Jobs_Appl__Compa__5EBF139D">
             <End Role="Companies" EntitySet="Companies" />
@@ -430,9 +501,29 @@
             <End Role="Employee_Login" EntitySet="Employee_Login" />
             <End Role="Jobs_Hired" EntitySet="Jobs_Hired" />
           </AssociationSet>
+          <EntitySet Name="Job_Details" EntityType="JobSearchDBModel.Job_Details" />
+          <EntitySet Name="Salary_Type" EntityType="JobSearchDBModel.Salary_Type" />
+          <EntitySet Name="Work_Authorization_Type" EntityType="JobSearchDBModel.Work_Authorization_Type" />
+          <AssociationSet Name="FK__Job_Detai__MinWo__7E37BEF6" Association="JobSearchDBModel.FK__Job_Detai__MinWo__7E37BEF6">
+            <End Role="Work_Authorization_Type" EntitySet="Work_Authorization_Type" />
+            <End Role="Job_Details" EntitySet="Job_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Detai__Salar__7D439ABD" Association="JobSearchDBModel.FK__Job_Detai__Salar__7D439ABD">
+            <End Role="Salary_Type" EntitySet="Salary_Type" />
+            <End Role="Job_Details" EntitySet="Job_Details" />
+          </AssociationSet>
+          <EntitySet Name="Jobs" EntityType="JobSearchDBModel.Jobs" />
+          <AssociationSet Name="FK__Jobs__CompanyId__571DF1D5" Association="JobSearchDBModel.FK__Jobs__CompanyId__571DF1D5">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Jobs" EntitySet="Jobs" />
+          </AssociationSet>
           <AssociationSet Name="FK__Employee___JobId__74AE54BC" Association="JobSearchDBModel.FK__Employee___JobId__74AE54BC">
             <End Role="Jobs" EntitySet="Jobs" />
             <End Role="Employee_Searches" EntitySet="Employee_Searches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Job_Detai__JobId__7C4F7684" Association="JobSearchDBModel.FK__Job_Detai__JobId__7C4F7684">
+            <End Role="Jobs" EntitySet="Jobs" />
+            <End Role="Job_Details" EntitySet="Job_Details" />
           </AssociationSet>
           <AssociationSet Name="FK__Job_Revie__JobId__693CA210" Association="JobSearchDBModel.FK__Job_Revie__JobId__693CA210">
             <End Role="Jobs" EntitySet="Jobs" />
@@ -459,9 +550,9 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Job_Reviews" Relationship="JobSearchDBModel.FK__Job_Revie__Compa__68487DD7" FromRole="Companies" ToRole="Job_Reviews" />
-          <NavigationProperty Name="Jobs" Relationship="JobSearchDBModel.FK__Jobs__CompanyId__571DF1D5" FromRole="Companies" ToRole="Jobs" />
           <NavigationProperty Name="Jobs_Applied" Relationship="JobSearchDBModel.FK__Jobs_Appl__Compa__5EBF139D" FromRole="Companies" ToRole="Jobs_Applied" />
           <NavigationProperty Name="Jobs_Hired" Relationship="JobSearchDBModel.FK__Jobs_Hire__Compa__6383C8BA" FromRole="Companies" ToRole="Jobs_Hired" />
+          <NavigationProperty Name="Jobs" Relationship="JobSearchDBModel.FK__Jobs__CompanyId__571DF1D5" FromRole="Companies" ToRole="Jobs" />
         </EntityType>
         <EntityType Name="Employee_Details">
           <Key>
@@ -538,23 +629,6 @@
           <NavigationProperty Name="Employee_Details" Relationship="JobSearchDBModel.FK__Employee___JobTi__5165187F" FromRole="Job_Type" ToRole="Employee_Details" />
           <NavigationProperty Name="Jobs" Relationship="JobSearchDBModel.FK__Jobs__JobTypeId__5629CD9C" FromRole="Job_Type" ToRole="Jobs" />
         </EntityType>
-        <EntityType Name="Jobs">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="JobName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="JobTypeId" Type="Int32" Nullable="false" />
-          <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <Property Name="JobDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DatePosted" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Companies" Relationship="JobSearchDBModel.FK__Jobs__CompanyId__571DF1D5" FromRole="Jobs" ToRole="Companies" />
-          <NavigationProperty Name="Employee_Searches" Relationship="JobSearchDBModel.FK__Employee___JobId__74AE54BC" FromRole="Jobs" ToRole="Employee_Searches" />
-          <NavigationProperty Name="Job_Reviews" Relationship="JobSearchDBModel.FK__Job_Revie__JobId__693CA210" FromRole="Jobs" ToRole="Job_Reviews" />
-          <NavigationProperty Name="Job_Type" Relationship="JobSearchDBModel.FK__Jobs__JobTypeId__5629CD9C" FromRole="Jobs" ToRole="Job_Type" />
-          <NavigationProperty Name="Jobs_Applied" Relationship="JobSearchDBModel.FK__Jobs_Appl__JobId__5FB337D6" FromRole="Jobs" ToRole="Jobs_Applied" />
-          <NavigationProperty Name="Jobs_Hired" Relationship="JobSearchDBModel.FK__Jobs_Hire__JobId__6477ECF3" FromRole="Jobs" ToRole="Jobs_Hired" />
-        </EntityType>
         <EntityType Name="Jobs_Applied">
           <Key>
             <PropertyRef Name="Id" />
@@ -589,18 +663,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Job_Reviews">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Jobs__CompanyId__571DF1D5">
-          <End Type="JobSearchDBModel.Companies" Role="Companies" Multiplicity="1" />
-          <End Type="JobSearchDBModel.Jobs" Role="Jobs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Companies">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Jobs">
               <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
@@ -713,6 +775,90 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Job_Details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" />
+          <Property Name="JobDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SalaryMin" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalaryMax" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalaryType" Type="Int32" Nullable="false" />
+          <Property Name="MinWorkAuthorization" Type="Int32" />
+          <NavigationProperty Name="Work_Authorization_Type" Relationship="JobSearchDBModel.FK__Job_Detai__MinWo__7E37BEF6" FromRole="Job_Details" ToRole="Work_Authorization_Type" />
+          <NavigationProperty Name="Salary_Type" Relationship="JobSearchDBModel.FK__Job_Detai__Salar__7D439ABD" FromRole="Job_Details" ToRole="Salary_Type" />
+          <NavigationProperty Name="Jobs" Relationship="JobSearchDBModel.FK__Job_Detai__JobId__7C4F7684" FromRole="Job_Details" ToRole="Jobs" />
+        </EntityType>
+        <EntityType Name="Salary_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PayType" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Job_Details" Relationship="JobSearchDBModel.FK__Job_Detai__Salar__7D439ABD" FromRole="Salary_Type" ToRole="Job_Details" />
+        </EntityType>
+        <EntityType Name="Work_Authorization_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Job_Details" Relationship="JobSearchDBModel.FK__Job_Detai__MinWo__7E37BEF6" FromRole="Work_Authorization_Type" ToRole="Job_Details" />
+        </EntityType>
+        <Association Name="FK__Job_Detai__MinWo__7E37BEF6">
+          <End Type="JobSearchDBModel.Work_Authorization_Type" Role="Work_Authorization_Type" Multiplicity="0..1" />
+          <End Type="JobSearchDBModel.Job_Details" Role="Job_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Work_Authorization_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Job_Details">
+              <PropertyRef Name="MinWorkAuthorization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Detai__Salar__7D439ABD">
+          <End Type="JobSearchDBModel.Salary_Type" Role="Salary_Type" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Job_Details" Role="Job_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salary_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Job_Details">
+              <PropertyRef Name="SalaryType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Jobs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JobTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="DatePosted" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Companies" Relationship="JobSearchDBModel.FK__Jobs__CompanyId__571DF1D5" FromRole="Jobs" ToRole="Companies" />
+          <NavigationProperty Name="Employee_Searches" Relationship="JobSearchDBModel.FK__Employee___JobId__74AE54BC" FromRole="Jobs" ToRole="Employee_Searches" />
+          <NavigationProperty Name="Job_Details" Relationship="JobSearchDBModel.FK__Job_Detai__JobId__7C4F7684" FromRole="Jobs" ToRole="Job_Details" />
+          <NavigationProperty Name="Job_Reviews" Relationship="JobSearchDBModel.FK__Job_Revie__JobId__693CA210" FromRole="Jobs" ToRole="Job_Reviews" />
+          <NavigationProperty Name="Job_Type" Relationship="JobSearchDBModel.FK__Jobs__JobTypeId__5629CD9C" FromRole="Jobs" ToRole="Job_Type" />
+          <NavigationProperty Name="Jobs_Applied" Relationship="JobSearchDBModel.FK__Jobs_Appl__JobId__5FB337D6" FromRole="Jobs" ToRole="Jobs_Applied" />
+          <NavigationProperty Name="Jobs_Hired" Relationship="JobSearchDBModel.FK__Jobs_Hire__JobId__6477ECF3" FromRole="Jobs" ToRole="Jobs_Hired" />
+        </EntityType>
+        <Association Name="FK__Jobs__CompanyId__571DF1D5">
+          <End Type="JobSearchDBModel.Companies" Role="Companies" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Jobs" Role="Jobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Jobs">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Employee___JobId__74AE54BC">
           <End Type="JobSearchDBModel.Jobs" Role="Jobs" Multiplicity="1" />
           <End Type="JobSearchDBModel.Employee_Searches" Role="Employee_Searches" Multiplicity="*" />
@@ -721,6 +867,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Employee_Searches">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Job_Detai__JobId__7C4F7684">
+          <End Type="JobSearchDBModel.Jobs" Role="Jobs" Multiplicity="0..1" />
+          <End Type="JobSearchDBModel.Job_Details" Role="Job_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jobs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Job_Details">
               <PropertyRef Name="JobId" />
             </Dependent>
           </ReferentialConstraint>
@@ -853,18 +1011,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Jobs">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Jobs">
-              <MappingFragment StoreEntitySet="Jobs">
-                <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
-                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="JobTypeId" ColumnName="JobTypeId" />
-                <ScalarProperty Name="JobName" ColumnName="JobName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Jobs_Applied">
             <EntityTypeMapping TypeName="JobSearchDBModel.Jobs_Applied">
               <MappingFragment StoreEntitySet="Jobs_Applied">
@@ -883,6 +1029,46 @@
                 <ScalarProperty Name="JobId" ColumnName="JobId" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Job_Details">
+            <EntityTypeMapping TypeName="JobSearchDBModel.Job_Details">
+              <MappingFragment StoreEntitySet="Job_Details">
+                <ScalarProperty Name="MinWorkAuthorization" ColumnName="MinWorkAuthorization" />
+                <ScalarProperty Name="SalaryType" ColumnName="SalaryType" />
+                <ScalarProperty Name="SalaryMax" ColumnName="SalaryMax" />
+                <ScalarProperty Name="SalaryMin" ColumnName="SalaryMin" />
+                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salary_Type">
+            <EntityTypeMapping TypeName="JobSearchDBModel.Salary_Type">
+              <MappingFragment StoreEntitySet="Salary_Type">
+                <ScalarProperty Name="PayType" ColumnName="PayType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Work_Authorization_Type">
+            <EntityTypeMapping TypeName="JobSearchDBModel.Work_Authorization_Type">
+              <MappingFragment StoreEntitySet="Work_Authorization_Type">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="JobSearchDBModel.Jobs">
+              <MappingFragment StoreEntitySet="Jobs">
+                <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="JobTypeId" ColumnName="JobTypeId" />
+                <ScalarProperty Name="JobName" ColumnName="JobName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

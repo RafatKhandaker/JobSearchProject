@@ -40,3 +40,26 @@ input[type=text] {
 input[type=text]:focus {
     width: 100%;
 }
+
+.search-bar {
+    color: black;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th{
+    text-align: center;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}

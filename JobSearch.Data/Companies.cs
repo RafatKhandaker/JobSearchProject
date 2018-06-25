@@ -18,9 +18,9 @@ namespace JobSearch.Data
         public Companies()
         {
             this.Job_Reviews = new HashSet<Job_Reviews>();
-            this.Jobs = new HashSet<Jobs>();
             this.Jobs_Applied = new HashSet<Jobs_Applied>();
             this.Jobs_Hired = new HashSet<Jobs_Hired>();
+            this.Jobs = new HashSet<Jobs>();
         }
     
         public int Id { get; set; }
@@ -30,10 +30,10 @@ namespace JobSearch.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Job_Reviews> Job_Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Jobs> Jobs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Jobs_Applied> Jobs_Applied { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Jobs_Hired> Jobs_Hired { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Jobs> Jobs { get; set; }
     }
 }

@@ -48,6 +48,18 @@
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="SearchDate" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="Job_Details">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JobId" Type="int" />
+    <Property Name="JobDescription" Type="varchar(max)" />
+    <Property Name="SalaryMin" Type="money" />
+    <Property Name="SalaryMax" Type="money" />
+    <Property Name="SalaryType" Type="int" Nullable="false" />
+    <Property Name="MinWorkAuthorization" Type="int" />
+  </EntityType>
   <EntityType Name="Job_Reviews">
     <Key>
       <PropertyRef Name="Id" />
@@ -75,7 +87,6 @@
     <Property Name="JobName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="JobTypeId" Type="int" Nullable="false" />
     <Property Name="CompanyId" Type="int" Nullable="false" />
-    <Property Name="JobDescription" Type="varchar(max)" />
     <Property Name="DatePosted" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Jobs_Applied">
@@ -97,6 +108,20 @@
     <Property Name="CompanyId" Type="int" Nullable="false" />
     <Property Name="JobId" Type="int" Nullable="false" />
     <Property Name="DateHired" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Salary_Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PayType" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Work_Authorization_Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="25" />
   </EntityType>
   <Association Name="FK__Employee___JobId__74AE54BC">
     <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
@@ -155,6 +180,42 @@
       </Principal>
       <Dependent Role="Employee_Searches">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Job_Detai__JobId__7C4F7684">
+    <End Role="Jobs" Type="Self.Jobs" Multiplicity="0..1" />
+    <End Role="Job_Details" Type="Self.Job_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jobs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Job_Details">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Job_Detai__MinWo__7E37BEF6">
+    <End Role="Work_Authorization_Type" Type="Self.Work_Authorization_Type" Multiplicity="0..1" />
+    <End Role="Job_Details" Type="Self.Job_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Work_Authorization_Type">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Job_Details">
+        <PropertyRef Name="MinWorkAuthorization" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Job_Detai__Salar__7D439ABD">
+    <End Role="Salary_Type" Type="Self.Salary_Type" Multiplicity="1" />
+    <End Role="Job_Details" Type="Self.Job_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Salary_Type">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Job_Details">
+        <PropertyRef Name="SalaryType" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -296,11 +357,14 @@
     <EntitySet Name="Employee_Login" EntityType="Self.Employee_Login" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee_Roles" EntityType="Self.Employee_Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee_Searches" EntityType="Self.Employee_Searches" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Job_Details" EntityType="Self.Job_Details" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Job_Reviews" EntityType="Self.Job_Reviews" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Job_Type" EntityType="Self.Job_Type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Jobs_Applied" EntityType="Self.Jobs_Applied" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Jobs_Hired" EntityType="Self.Jobs_Hired" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Salary_Type" EntityType="Self.Salary_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Work_Authorization_Type" EntityType="Self.Work_Authorization_Type" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__Employee___JobId__74AE54BC" Association="Self.FK__Employee___JobId__74AE54BC">
       <End Role="Jobs" EntitySet="Jobs" />
       <End Role="Employee_Searches" EntitySet="Employee_Searches" />
@@ -320,6 +384,18 @@
     <AssociationSet Name="FK__Employee___UserI__75A278F5" Association="Self.FK__Employee___UserI__75A278F5">
       <End Role="Employee_Login" EntitySet="Employee_Login" />
       <End Role="Employee_Searches" EntitySet="Employee_Searches" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Job_Detai__JobId__7C4F7684" Association="Self.FK__Job_Detai__JobId__7C4F7684">
+      <End Role="Jobs" EntitySet="Jobs" />
+      <End Role="Job_Details" EntitySet="Job_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Job_Detai__MinWo__7E37BEF6" Association="Self.FK__Job_Detai__MinWo__7E37BEF6">
+      <End Role="Work_Authorization_Type" EntitySet="Work_Authorization_Type" />
+      <End Role="Job_Details" EntitySet="Job_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Job_Detai__Salar__7D439ABD" Association="Self.FK__Job_Detai__Salar__7D439ABD">
+      <End Role="Salary_Type" EntitySet="Salary_Type" />
+      <End Role="Job_Details" EntitySet="Job_Details" />
     </AssociationSet>
     <AssociationSet Name="FK__Job_Revie__Compa__68487DD7" Association="Self.FK__Job_Revie__Compa__68487DD7">
       <End Role="Companies" EntitySet="Companies" />

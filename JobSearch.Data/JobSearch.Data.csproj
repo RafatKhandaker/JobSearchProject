@@ -91,6 +91,9 @@
     <Compile Include="Jobs_Hired.cs">
       <DependentUpon>JobSeachDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Job_Details.cs">
+      <DependentUpon>JobSeachDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Job_Reviews.cs">
       <DependentUpon>JobSeachDB.tt</DependentUpon>
     </Compile>
@@ -98,6 +101,12 @@
       <DependentUpon>JobSeachDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Salary_Type.cs">
+      <DependentUpon>JobSeachDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Work_Authorization_Type.cs">
+      <DependentUpon>JobSeachDB.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="JobSeachDB.edmx">

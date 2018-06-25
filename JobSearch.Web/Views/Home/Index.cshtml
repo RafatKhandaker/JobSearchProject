@@ -2,37 +2,41 @@
     ViewBag.Title = "Home Page";
 }
 
+@Styles.Render("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
 @Styles.Render("~/Content/homepage.css")
 
-<div ng-app="HomeApp" ng-controller="TableController">
+<div>
     <div class="jumbotron header-image">
         <h1 class="heading">U - Work</h1>
         <p class="slogan">"for the real talents"</p>
-        <input ng-change="" type="text" name="search" placeholder="Search"/>
+        <input class="search-bar" type="text" name="search" placeholder="Search"/>
     </div>
 
-    <div class="row">
-        <div class="">
-            <Table style="visibility:hidden">
-                <tr>
-                    <th>Job Id</th>
-                    <th>Job Name</th>
-                    <th>Job Type</th>
-                    <th>Company</th>
-                    <th>Date Posted</th>
-                </tr>
-                <tr ng-repeat="d in data">
-                    <td>{{d.Id}}</td>
-                    <td>{{d.JobName}}</td>
-                    <td>{{d.JobType.Title}}</td>
-                    <td>{{d.Companies.Name}}</td>
-                    <td>{{d.DatePosted}}</td>               
-                </tr>
-            </Table>
+    <div ng-controller="TableController">
+        <div class="row">
+            <div class="">
+                <Table>
+                    <tr>
+                        <th>Job Id</th>
+                        <th>Job Name</th>
+                        <th>Job Type</th>
+                        <th>Company</th>
+                        <th>Salary</th>
+                        <th>Date Posted</th>
+                        <th>Peek</th>
+                    </tr>
+                    <tr ng-repeat="d in data">
+                        <td>{{d.Id}}</td>
+                        <td>{{d.JobName}}</td>
+                        <td>{{d.JobType.Title}}</td>
+                        <td>{{d.Companies.Name}}</td>
+                        <td>$ {{d.Job_Details.SalaryMin}}-{{d.Job_Details.SalaryMax}} per {{d.Job_Details.Salary_Type.PayType}}</td>
+                        <td>{{d.DatePosted}}</td>    
+                        <td>@Html.Label( "details bar", new { @class= "btn btn-default" })</td>           
+                    </tr>
+                </Table>
+            </div>
         </div>
     </div>
 </div>
 
-@Scripts.Render("https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
-@Scripts.Render("https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js")
-@Scripts.Render("~/Scripts/Angular/Home/app.js")
