@@ -2,7 +2,6 @@
 using System;
 using JobSearch.Data;
 using System.Linq;
-using static System.Collections.Specialized.BitVector32;
 
 namespace JobSearch.Core
 {
