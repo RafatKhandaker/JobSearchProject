@@ -2,10 +2,11 @@
 using System;
 using JobSearch.Data;
 using System.Linq;
+using static System.Collections.Specialized.BitVector32;
 
 namespace JobSearch.Core
 {
-    public class DataTask : IDBService, IRestService, IDisposable
+    public class DataTask : IDBService, IRestService, ILoginService, IDisposable
     {
         IEmailService _EmailService;
         JobSearchDBEntities DB;
@@ -19,18 +20,7 @@ namespace JobSearch.Core
         }
 
         /* IDBService Implements -- Casual Database flow task */
-        public void ExecuteTwoFactorTask(int id)
-        {
-            var query = DB.Employee_Details.Where(w => w.LoginId == id);
-            try
-            {
-                _EmailService
-                    .AddRecipientId( query.Select(s => s.Email).FirstOrDefault() , query.Select(s => s.Employee_Login.TwoFKey).FirstOrDefault()  )
-                    .SendVerificationLink();
-            }
-            catch (Exception e) { throw e; }
-        }
-
+   
         public int RetrieveLoginId(string user, string password)
         {
             try
@@ -43,10 +33,10 @@ namespace JobSearch.Core
         }
 
 
-        public bool ValidateTwoFactorKey(Guid key)
+        public bool ValidateTwoFactorKey(string user, Guid key)
         {
-            return DB.Employee_Login.Where(w => w.TwoFKey == key).Any();
-        }
+           return DB.Employee_Login.Where(w => w.TwoFKey == key && w.Username == user).Any();
+         }
 
 
         /* IRestService Implements -- API Rest Controller */
@@ -79,5 +69,26 @@ namespace JobSearch.Core
         {
             DB.Dispose();
         }
+
+
+        /* Login Tasks */
+        public bool IfUserExists(string email, string pass)
+        {
+            return DB.Employee_Login.Where(w => w.Username == email && w.Password == pass).Any();
+        }
+
+
+        public void ExecuteTwoFactorTask(int id)
+        {
+            var query = DB.Employee_Details.Where(w => w.LoginId == id);
+            try
+            {
+                _EmailService
+                    .AddRecipientId(query.Select(s => s.Email).FirstOrDefault(), query.Select(s => s.Employee_Login.TwoFKey).FirstOrDefault())
+                    .SendVerificationLink();
+            }
+            catch (Exception e) { throw e; }
+        }
+
     }
 }

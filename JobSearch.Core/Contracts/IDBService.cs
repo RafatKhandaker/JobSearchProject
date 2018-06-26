@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace JobSearch.Core.Contracts
 {
@@ -10,8 +7,6 @@ namespace JobSearch.Core.Contracts
     {
         int RetrieveLoginId( string user, string password );
 
-        void ExecuteTwoFactorTask( int id );
-
-        bool ValidateTwoFactorKey( Guid key );
+        bool ValidateTwoFactorKey( string user, Guid key );
     }
 }

@@ -50,6 +50,7 @@ namespace JobSearch.Web
             container.RegisterType<IEmailService, EmailTask>();
             container.RegisterType<IMessageFactory, EmailBuilder>();
             container.RegisterType<IRestService, DataTask>();
+            container.RegisterType<ILoginService, DataTask>();
 
 
 

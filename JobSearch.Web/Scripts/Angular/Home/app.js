@@ -5,14 +5,8 @@ var post_Login_Api = "/api/Rest/getUserAccount"
 
 ngApp.config(function ($routeProvider) {
     $routeProvider
-     //   .when("/api/Rest/getJobMarket", { templateUrl: "/api/Rest/getJobMarket" })
         .when("/", { templateUrl: "Web/Index", controller: 'IndexController' })
         .when("/Login", { templateUrl: "Web/Login", controller: 'LoginController' });
-    //   .when("/logout", { templateUrl: "/Home/Logout", controller:'LogoutController' })
-    //   .when("/Admin", { templateUrl: "/Home/Admin", controller:'AdminController' })
-    //   .when("Profile", { templateUrl: "/Home/Profile", controller:'ProfileController'})
-    //  .otherwise({ redirectTo: '/' });  
-    
 });
 
 
