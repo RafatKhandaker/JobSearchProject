@@ -1,34 +1,36 @@
 ﻿var ngApp = angular.module('HomeApp', ['ngRoute']);
-var API = "/api/Rest/getJobMarket";  
+var get_Jobs_Api = "/api/Rest/getJobMarket";
+var post_Login_Api = "/api/Rest/getUserAccount"
 
 
 ngApp.config(function ($routeProvider) {
     $routeProvider
-        .when("/", { templateUrl: "/Home/Index" })
-        .when("/login", { templateUrl: "/Home/Login" })
-        .when("/logout", { templateUrl: "/Home/Logout" })
-        .when("/Admin", { templateUrl: "/Home/Admin" })
-        .when("Profile", { templateUrl: "Home/Profile" });
+     //   .when("/api/Rest/getJobMarket", { templateUrl: "/api/Rest/getJobMarket" })
+        .when("/", { templateUrl: "Web/Index", controller: 'IndexController' })
+        .when("/Login", { templateUrl: "Web/Login", controller: 'LoginController' });
+    //   .when("/logout", { templateUrl: "/Home/Logout", controller:'LogoutController' })
+    //   .when("/Admin", { templateUrl: "/Home/Admin", controller:'AdminController' })
+    //   .when("Profile", { templateUrl: "/Home/Profile", controller:'ProfileController'})
+    //  .otherwise({ redirectTo: '/' });  
+    
 });
 
 
-ngApp.controller('TableController', function ($scope, $http) {
-    $scope.data = $http.get(API)
+ngApp.controller('IndexController', function ($scope, $http) {
+    $scope.data = $http.get( get_Jobs_Api )
                     .then(function (response) {
                         return response.data;
                     });
 
     $scope.SearchUpdate = function (value) {
-    }
+    };
 });
 
 
-ngApp.controller('LoginController', function ($scope) {
-    $scope.openLogin = function () {
-    }
-
-    $scope.closeLogin = function () {
-
-    }
+ngApp.controller('LoginController', function ($scope, $http) {
+    $scope.submitLogin = function () {
+        $http.post(post_Login_Api, [$scope.email, $scope.pass])
+                    .then(function (response) { alert("Login Success !"); });
+    };
 });
 

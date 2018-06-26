@@ -238,7 +238,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\WebController.cs" />
     <Compile Include="Controllers\RestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -255,13 +255,26 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\homepage.css" />
     <Content Include="Content\Images\75586f01b497bf4.jpg" />
+    <Content Include="Content\Images\favicon.ico" />
     <Content Include="Content\Images\JobNetwork.jpg" />
+    <Content Include="Content\Images\Uwork-icon.png" />
+    <Content Include="Content\Login\animate.css" />
+    <Content Include="Content\Login\animsition.min.css" />
+    <Content Include="Content\Login\daterangepicker.css" />
+    <Content Include="Content\Login\font-awesome.min.css" />
+    <Content Include="Content\Login\hamburgers.min.css" />
+    <Content Include="Content\Login\main.css" />
+    <Content Include="Content\Login\material-design-iconic-font.min.css" />
+    <Content Include="Content\Login\select2.min.css" />
+    <Content Include="Content\Login\util.css" />
+    <Content Include="Content\main.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\angular-animation.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\Angular\Home\app.js" />
@@ -278,6 +291,12 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Login\animsition.min.js" />
+    <Content Include="Scripts\Login\countdowntime.js" />
+    <Content Include="Scripts\Login\daterangepicker.js" />
+    <Content Include="Scripts\Login\main.js" />
+    <Content Include="Scripts\Login\popper.js" />
+    <Content Include="Scripts\Login\select2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -292,10 +311,9 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\LoginPopup.cshtml" />
+    <Content Include="Views\Web\_Layout.cshtml" />
+    <Content Include="Views\Web\Index.cshtml" />
+    <Content Include="Views\Web\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

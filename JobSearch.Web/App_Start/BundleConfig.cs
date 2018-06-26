@@ -32,6 +32,9 @@ namespace JobSearch.Web
 
             bundles.Add(new ScriptBundle("~/bundles/angular-route").Include(
                   "~/Scripts/angular-route.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angular-animation").Include(
+                 "~/Scripts/angular-animation.js"));
         }
     }
 }

@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = null;
+}
+
+@Styles.Render("~/Content/Login/animate.css")
+@Styles.Render("~/Content/Login/animsition.min.css")
+@Styles.Render("~/Content/Login/daterangepicker.css")
+@Styles.Render("~/Content/Login/font-awesome.min.css")
+@Styles.Render("~/Content/Login/hamburgers.min.css")
+@Styles.Render("~/Content/Login/material-design-iconic-font.min.css")
+@Styles.Render("~/Content/Login/select2.min.css")
+@Styles.Render("~/Content/Login/util.css")
+@Styles.Render("~/Content/Login/main.css")
+
+<div ng-controller="LoginController" class="wrap-login100">
+    <form class="login100-form validate-form" action="POST">
+        <span class="login100-form-title p-b-26">
+            Welcome
+        </span>
+        <span class="login100-form-title p-b-48">
+            <img style="width: 120px" src="~/Content/Images/Uwork-icon.png"/></img>
+        </span>
+
+        <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
+            <input class="input100" type="text" name="email" ng-model="email">
+            <span class="focus-input100" data-placeholder="Email"></span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Enter password">
+            <span class="btn-show-pass">
+                <i class="zmdi zmdi-eye"></i>
+            </span>
+            <input class="input100" type="password" name="pass" ng-model="pass">
+            <span class="focus-input100" data-placeholder="Password"></span>
+        </div>
+
+        <div class="container-login100-form-btn">
+            <div class="wrap-login100-form-btn">
+                <div class="login100-form-bgbtn"></div>
+                <button ng-click="submitLogin" class="login100-form-btn">
+                    Login
+                </button>
+            </div>
+        </div>
+
+        <div class="text-center p-t-115">
+            <span class="txt1">
+                Don’t have an account?
+            </span>
+
+            <a class="txt2" href="#">
+                Sign Up
+            </a>
+        </div>
+    </form>
+</div>
+
+@Scripts.Render("~/Scripts/Login/animsition.min.js")
+@Scripts.Render("~/Scripts/Login/countdowntime.js")
+@Scripts.Render("~/Scripts/Login/daterangepicker.js")
+@Scripts.Render("~/Scripts/Login/main.js")
+@Scripts.Render("~/Scripts/Login/popper.js")
+@Scripts.Render("~/Scripts/Login/select2.min.js")

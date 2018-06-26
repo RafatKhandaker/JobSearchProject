@@ -16,21 +16,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a class="navbar-brand" area="" style="color: #428bca" href="/#!/">U-Work</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li><a href="/#!/Jobs">Jobs</a></li>
+                    <li><a href="/#!/Companies">Companies</a></li>
+                    <li><a href="/#!/Resume">Resume</a></li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/Register">Register</a></li>
+                    <li><a href="/#!/Login">Login</a></li>  
+                </ul>
+
             </div>
         </div>
     </div>
     <div class="container body-content">
         <div ng-view>
-            @RenderBody()
+                 <!-- View Elements through Angular -->
         </div>
         <hr />
         <footer>
@@ -41,8 +45,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/angular-route")
+    @Scripts.Render("~/bundles/angular-animation")
     @Scripts.Render("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
     @Scripts.Render("~/Scripts/Angular/Home/app.js")
-    @RenderSection("scripts", required: false)
 </body ng-app="HomeApp">
 </html>

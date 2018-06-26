@@ -1,18 +1,19 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    Layout = null;
 }
 
 @Styles.Render("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
 @Styles.Render("~/Content/homepage.css")
 
-<div>
+<div ng-controller="IndexController">
     <div class="jumbotron header-image">
         <h1 class="heading">U - Work</h1>
         <p class="slogan">"for the real talents"</p>
-        <input class="search-bar" type="text" name="search" placeholder="Search"/>
+        <input ng-model="searchCriteria" class="search-bar" type="text" name="search" placeholder="Search"/>
     </div>
 
-    <div ng-controller="TableController">
+    <div>
         <div class="row">
             <div class="">
                 <Table>
@@ -25,7 +26,7 @@
                         <th>Date Posted</th>
                         <th>Peek</th>
                     </tr>
-                    <tr ng-repeat="d in data">
+                    <tr ng-repeat="d in data | filter:searchCriteria">
                         <td>{{d.Id}}</td>
                         <td>{{d.JobName}}</td>
                         <td>{{d.JobType.Title}}</td>
