@@ -21,6 +21,8 @@ namespace JobSearch.Web.Controllers
             this._LoginTask = _LoginTask;
             this._DBTask = _DBTask;
         }
+
+        /* API Call to Data*/
         [HttpGet]
         public IEnumerable<Jobs_Applied> getJobsApplied(int userId) { return _RestTask.ReturnJobsApplied( userId ); }
 
@@ -36,6 +38,9 @@ namespace JobSearch.Web.Controllers
         [HttpGet]
         public IEnumerable<Jobs> getJobMarket(int companyId) { return _RestTask.ReturnJobMarket( companyId ); }
 
+
+
+        /*  Login Tasks */
         [HttpPost]
         public bool LoginUser(string user, string pass)
         {
@@ -52,6 +57,7 @@ namespace JobSearch.Web.Controllers
                 HttpContext.Current.Session["user"] = key;
             };
         }
+
 
         [HttpGet]
         public IEnumerable<string> Index() { return new string[] {"test","Value" }; }

@@ -2,6 +2,8 @@
 using System;
 using JobSearch.Data;
 using System.Linq;
+using JobSearch.Data.Models;
+using System.Collections.Generic;
 
 namespace JobSearch.Core
 {
@@ -90,5 +92,39 @@ namespace JobSearch.Core
             catch (Exception e) { return false; }
         }
 
+        public void RegisterNewUser( UserModel newProfile )
+        {
+            ICollection<Employee_Details> eDetailsModel = new List<Employee_Details>();
+
+                eDetailsModel.Add( new Employee_Details
+                {
+                    Firstname = newProfile.FirstName,
+                    Lastname = newProfile.LastName,
+                    Email = newProfile.Email,
+                    Address = newProfile.Address,
+                    SignUpDate = DateTime.Now,
+                    JobTitleId = newProfile.JobTitleId
+                });
+
+            DB.Employee_Login.Add( 
+                new Employee_Login
+                {
+                    Username = newProfile.Username,
+                    Password = newProfile.Password,
+                    RoleId = newProfile.RoleId,
+                    Employee_Details = eDetailsModel,
+                    TwoFKey = Guid.NewGuid()
+                });
+            
+            /* my interpretation ..  the database will throw an error 
+             * for users that try to insert when tables are locked by 
+             * other users attempting to insert data anyay.. 
+             * but async will throw an error if duplicate primary key are 
+             * inserted  -- Has to be handled later  . but also.. 
+             * if async.. then the sql will autoincrement for user..thus no errors */
+
+            try { DB.SaveChangesAsync(); } catch(Exception e) { throw e; }
+                           
+        }
     }
 }
