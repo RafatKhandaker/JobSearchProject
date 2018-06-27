@@ -1,0 +1,16 @@
+﻿INSERT INTO dbo.Job_Type( Title ) VALUES( 'Agriculture, Food & Natural Resources' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Architecture & Construction' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Arts, Audio/Video Technology & Communications' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Business Management & Administration' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Education & Training' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Finance' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Government & Public Administration' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Health Science' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Hospitality & Tourism' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Human Services' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Information Technology' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Law, Public Safety, Corrections & Security' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Manufacturing' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Marketing, Sales & Service' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Science, Technology, Engineering & Mathematics' );
+INSERT INTO dbo.Job_Type( Title ) VALUES( 'Transportation, Distribution & Logistics' );

@@ -37,6 +37,15 @@
         <AssociationConnector Association="JobSearchDBModel.FK__Jobs__JobTypeId__5629CD9C" />
         <AssociationConnector Association="JobSearchDBModel.FK__Jobs_Appl__JobId__5FB337D6" />
         <AssociationConnector Association="JobSearchDBModel.FK__Jobs_Hire__JobId__6477ECF3" />
+        <EntityTypeShape EntityType="JobSearchDBModel.Employee_Associations_Clubs" Width="1.5" PointX="19.75" PointY="4" />
+        <EntityTypeShape EntityType="JobSearchDBModel.Employee_Certification" Width="1.5" PointX="2.625" PointY="4.5" />
+        <EntityTypeShape EntityType="JobSearchDBModel.Employee_Education" Width="1.5" PointX="8.875" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobSearchDBModel.Employee_Key_Skills" Width="1.5" PointX="2.5" PointY="7" />
+        <EntityTypeShape EntityType="JobSearchDBModel.Employee_Resumes" Width="1.5" PointX="6" PointY="10" />
+        <EntityTypeShape EntityType="JobSearchDBModel.Resume_Work_History" Width="1.5" PointX="4.5" PointY="7.5" />
+        <AssociationConnector Association="JobSearchDBModel.FK__Employee___EmpId__08B54D69" />
+        <AssociationConnector Association="JobSearchDBModel.FK__Employee___EmpId__05D8E0BE" />
+        <AssociationConnector Association="JobSearchDBModel.FK__Employee___EmpId__2180FB33" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -22,5 +22,8 @@ namespace JobSearch.Web.Controllers
 
         [HttpGet]
         public ActionResult Login() { return View(); }
+
+        [HttpGet]
+        public ActionResult Register() { return View(); }
     }
 }

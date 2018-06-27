@@ -276,6 +276,13 @@
     <Content Include="Content\Login\select2.min.css" />
     <Content Include="Content\Login\util.css" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\Register\iconfont.css.minified.css" />
+    <Content Include="Content\Register\logo.svg" />
+    <Content Include="Content\Register\perfect-scrollbar.css.minified.css" />
+    <Content Include="Content\Register\print.css.minified.css" />
+    <Content Include="Content\Register\RegisterForm.css" />
+    <Content Include="Content\Register\shared.css.minified.css" />
+    <Content Include="Content\Register\ui.css.minified.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -346,6 +353,12 @@
     <Content Include="Content\fonts\poppins\Poppins-SemiBoldItalic.ttf" />
     <Content Include="Content\fonts\poppins\Poppins-Thin.ttf" />
     <Content Include="Content\fonts\poppins\Poppins-ThinItalic.ttf" />
+    <Content Include="Content\Register\build.js.minified.js.download" />
+    <Content Include="Content\Register\css" />
+    <Content Include="Content\Register\iframeResizer.contentWindow.min.js.minified.js.download" />
+    <Content Include="Content\Register\jquery-3.2.1.js.minified.js.download" />
+    <Content Include="Content\Register\perfect-scrollbar.jquery.js.minified.js.download" />
+    <Content Include="Content\Register\random.php" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -361,6 +374,7 @@
     <Content Include="Scripts\Login\popper.js" />
     <Content Include="Scripts\Login\select2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Register\boot-engine.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -377,6 +391,7 @@
     <Content Include="Views\Web\_Layout.cshtml" />
     <Content Include="Views\Web\Index.cshtml" />
     <Content Include="Views\Web\Login.cshtml" />
+    <Content Include="Views\Web\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

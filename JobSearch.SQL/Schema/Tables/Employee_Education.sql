@@ -1,0 +1,9 @@
+﻿CREATE TABLE dbo.Employee_Education
+(
+	Id UNIQUEIDENTIFIER NOT NULL,
+	EmpId INT NOT NULL FOREIGN KEY REFERENCES Employee_Login(Id),
+	University VARCHAR(100) NOT NULL,
+	GraduationDate DATETIME NOT NULL,
+	Degree VARCHAR(100) NOT NULL
+	PRIMARY KEY CLUSTERED (Id, University, Degree)
+)

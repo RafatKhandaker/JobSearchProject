@@ -6,7 +6,8 @@
 ngApp.config(function ($routeProvider) {
     $routeProvider
         .when("/", { templateUrl: "Web/Index", controller: 'IndexController' })
-        .when("/Login", { templateUrl: "Web/Login", controller: 'LoginController' });
+        .when("/Login", { templateUrl: "Web/Login", controller: 'LoginController' })
+        .when("/Register", { templateUrl: "Web/Register", controller: 'RegisterController'})
 });
 
 
