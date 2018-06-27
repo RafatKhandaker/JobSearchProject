@@ -46,11 +46,11 @@ namespace JobSearch.Web
 
             // e.g. container.RegisterType<ITestService, TestService>(); 
 
-            container.RegisterType<IDBService, DataTask>();
+            container.RegisterType<IDBService, ServiceTask>();
             container.RegisterType<IEmailService, EmailTask>();
             container.RegisterType<IMessageFactory, EmailBuilder>();
-            container.RegisterType<IRestService, DataTask>();
-            container.RegisterType<ILoginService, DataTask>();
+            container.RegisterType<IRestService, ServiceTask>();
+            container.RegisterType<ILoginService, ServiceTask>();
 
 
 

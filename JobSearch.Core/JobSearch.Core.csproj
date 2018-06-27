@@ -113,9 +113,10 @@
   <ItemGroup>
     <Compile Include="Contracts\IDBService.cs" />
     <Compile Include="Contracts\IEmailService.cs" />
+    <Compile Include="Contracts\ILoginService.cs" />
     <Compile Include="Contracts\IMessageFactory.cs" />
     <Compile Include="Contracts\IRestService.cs" />
-    <Compile Include="Utilities\DataTask.cs" />
+    <Compile Include="Utilities\ServiceTask.cs" />
     <Compile Include="Utilities\EmailTask.cs" />
     <Compile Include="Factories\EmailBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace JobSearch.Core
 {
-    public class DataTask : IDBService, IRestService, ILoginService, IDisposable
+    public class ServiceTask : IDBService, IRestService, ILoginService, IDisposable
     {
         IEmailService _EmailService;
         JobSearchDBEntities DB;
 
-        public DataTask() { }
+        public ServiceTask() { }
 
-        public DataTask( IEmailService _EmailService )
+        public ServiceTask( IEmailService _EmailService )
         {
             this._EmailService = _EmailService;
             this.DB = new JobSearchDBEntities();

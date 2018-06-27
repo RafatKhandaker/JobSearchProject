@@ -37,13 +37,15 @@ namespace JobSearch.Web.Controllers
         public IEnumerable<Jobs> getJobMarket(int companyId) { return _RestTask.ReturnJobMarket( companyId ); }
 
         [HttpPost]
-        public void LoginUser(string email, string pass)
+        public void LoginUser(string user, string pass)
         {
-            if (_LoginTask.IfUserExists(email, pass))
+            if (_LoginTask.IfUserExists(user, pass))
             {
-                _LoginTask.ExecuteTwoFactorTask( _DBTask.RetrieveLoginId( email, pass ));
+                _LoginTask.ExecuteTwoFactorTask( _DBTask.RetrieveLoginId( user, pass ));
             }
         }
+
+
 
         [HttpPost]
         public void SubmitTwoFactorKey(string user, Guid key)

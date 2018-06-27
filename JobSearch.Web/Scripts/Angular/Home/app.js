@@ -1,6 +1,6 @@
 ﻿var ngApp = angular.module('HomeApp', ['ngRoute']);
-var get_Jobs_Api = "/api/Rest/getJobMarket";
-var post_Login_Api = "/api/Rest/getUserAccount"
+    const get_Jobs_Api = "/api/Rest/getJobMarket";
+    const post_Login_Api = '/api/Rest/LoginUser';
 
 
 ngApp.config(function ($routeProvider) {
@@ -22,9 +22,11 @@ ngApp.controller('IndexController', function ($scope, $http) {
 
 
 ngApp.controller('LoginController', function ($scope, $http) {
-    $scope.submitLogin = function () {
-        $http.post(post_Login_Api, [$scope.email, $scope.pass])
-                    .then(function (response) { alert("Login Success !"); });
+    $scope.submitLogin = function (user, pass) {
+
+        $http.post(post_Login_Api + '?user=' + user + '&pass=' + pass)
+            .then(function (response) { alert("Login Success !"); });
+        
     };
 });
 

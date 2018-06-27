@@ -26,7 +26,7 @@
                         <th>Date Posted</th>
                         <th>Peek</th>
                     </tr>
-                    <tr ng-repeat="d in data | filter:searchCriteria">
+                    <tr ng-repeat="d in data"> <!-- filter:searchCriteria -->
                         <td>{{d.Id}}</td>
                         <td>{{d.JobName}}</td>
                         <td>{{d.JobType.Title}}</td>
