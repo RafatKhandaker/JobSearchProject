@@ -5,6 +5,6 @@ namespace JobSearch.Core.Contracts
     {
         bool IfUserExists(string email, string pass);
 
-        void ExecuteTwoFactorTask(int id);
+        bool ExecuteTwoFactorTask(int id);
     }
 }

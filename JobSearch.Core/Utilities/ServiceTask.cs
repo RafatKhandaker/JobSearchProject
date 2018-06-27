@@ -77,7 +77,7 @@ namespace JobSearch.Core
         }
 
 
-        public void ExecuteTwoFactorTask(int id)
+        public bool ExecuteTwoFactorTask(int id)
         {
             var query = DB.Employee_Details.Where(w => w.LoginId == id);
             try
@@ -85,8 +85,9 @@ namespace JobSearch.Core
                 _EmailService
                     .AddRecipientId(query.Select(s => s.Email).FirstOrDefault(), query.Select(s => s.Employee_Login.TwoFKey).FirstOrDefault())
                     .SendVerificationLink();
+                return true;
             }
-            catch (Exception e) { throw e; }
+            catch (Exception e) { return false; }
         }
 
     }
