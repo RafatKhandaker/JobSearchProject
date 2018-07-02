@@ -95,26 +95,36 @@ namespace JobSearch.Core
         public void RegisterNewUser( UserModel newProfile )
         {
             ICollection<Employee_Details> eDetailsModel = new List<Employee_Details>();
+            var locationKey = Guid.NewGuid();
 
-                eDetailsModel.Add( new Employee_Details
-                {
-                    Firstname = newProfile.FirstName,
-                    Lastname = newProfile.LastName,
-                    Email = newProfile.Email,
-                    Address = newProfile.Address,
-                    SignUpDate = DateTime.Now,
-                    JobTitleId = newProfile.JobTitleId
-                });
+            DB.Location_Address.Add(new Location_Address
+            {
+                 UniqueId = locationKey,
+                 Street = newProfile.StreetAddress,
+                 ZipCode = newProfile.ZipCode,
+                 City = newProfile.City,
+                 State = newProfile.State,
+                 Country = newProfile.Country,
+            });
 
-            DB.Employee_Login.Add( 
-                new Employee_Login
-                {
-                    Username = newProfile.Username,
-                    Password = newProfile.Password,
-                    RoleId = newProfile.RoleId,
-                    Employee_Details = eDetailsModel,
-                    TwoFKey = Guid.NewGuid()
-                });
+            eDetailsModel.Add(new Employee_Details
+            {
+                Firstname = newProfile.FirstName,
+                Lastname = newProfile.LastName,
+                Email = newProfile.Email,
+                SignUpDate = DateTime.Now,
+                LocationId = locationKey,
+                JobTitleId = newProfile.JobTitleId
+             });
+
+            DB.Employee_Login.Add( new Employee_Login
+            {
+                Username = newProfile.Username,
+                Password = newProfile.Password,
+                RoleId = newProfile.RoleId,
+                Employee_Details = eDetailsModel,
+                TwoFKey = Guid.NewGuid()
+            });
             
             /* my interpretation ..  the database will throw an error 
              * for users that try to insert when tables are locked by 

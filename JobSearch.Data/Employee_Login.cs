@@ -17,7 +17,6 @@ namespace JobSearch.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee_Login()
         {
-            this.Employee_Details = new HashSet<Employee_Details>();
             this.Employee_Roles = new HashSet<Employee_Roles>();
             this.Employee_Searches = new HashSet<Employee_Searches>();
             this.Job_Reviews = new HashSet<Job_Reviews>();
@@ -26,6 +25,7 @@ namespace JobSearch.Data
             this.Employee_Associations_Clubs = new HashSet<Employee_Associations_Clubs>();
             this.Employee_Education = new HashSet<Employee_Education>();
             this.Employee_Resumes = new HashSet<Employee_Resumes>();
+            this.Employee_Details = new HashSet<Employee_Details>();
         }
     
         public int Id { get; set; }
@@ -34,8 +34,6 @@ namespace JobSearch.Data
         public int RoleId { get; set; }
         public Nullable<System.Guid> TwoFKey { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee_Details> Employee_Details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee_Roles> Employee_Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -52,5 +50,7 @@ namespace JobSearch.Data
         public virtual ICollection<Employee_Education> Employee_Education { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee_Resumes> Employee_Resumes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee_Details> Employee_Details { get; set; }
     }
 }

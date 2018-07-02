@@ -16,5 +16,8 @@ namespace JobSearch.Data
     {
         public System.Guid Id { get; set; }
         public string Name { get; set; }
+        public int ResumeId { get; set; }
+    
+        public virtual Employee_Resumes Employee_Resumes { get; set; }
     }
 }

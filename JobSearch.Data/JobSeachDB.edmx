@@ -31,6 +31,7 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Certification" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="ResumeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee_Details">
           <Key>
@@ -44,6 +45,7 @@
           <Property Name="Address" Type="varchar" MaxLength="100" />
           <Property Name="JobTitleId" Type="int" Nullable="false" />
           <Property Name="SignUpDate" Type="datetime" Nullable="false" />
+          <Property Name="LocationId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee_Education">
           <Key>
@@ -64,6 +66,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ResumeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee_Login">
           <Key>
@@ -112,8 +115,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="JobId" Type="int" />
           <Property Name="JobDescription" Type="varchar(max)" />
-          <Property Name="SalaryMin" Type="money" />
-          <Property Name="SalaryMax" Type="money" />
+          <Property Name="SalaryMin" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="SalaryMax" Type="decimal" Precision="19" Scale="4" />
           <Property Name="SalaryType" Type="int" Nullable="false" />
           <Property Name="MinWorkAuthorization" Type="int" />
         </EntityType>
@@ -145,6 +148,7 @@
           <Property Name="JobTypeId" Type="int" Nullable="false" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
           <Property Name="DatePosted" Type="datetime" Nullable="false" />
+          <Property Name="LocationId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Jobs_Applied">
           <Key>
@@ -166,6 +170,39 @@
           <Property Name="JobId" Type="int" Nullable="false" />
           <Property Name="DateHired" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Location_Address">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Street" Type="varchar(max)" />
+          <Property Name="ZipCode" Type="int" Nullable="false" />
+          <Property Name="City" Type="int" Nullable="false" />
+          <Property Name="State" Type="int" Nullable="false" />
+          <Property Name="Country" Type="int" Nullable="false" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reference_City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reference_Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reference_State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Resume_Work_History">
           <Key>
             <PropertyRef Name="Id" />
@@ -178,6 +215,7 @@
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="Description" Type="varchar(max)" />
+          <Property Name="ResumeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Salary_Type">
           <Key>
@@ -253,6 +291,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK__Employee___Locat__5812160E' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK__Employee___Locat__5812160E" />-->
         <Association Name="FK__Employee___Login__4BAC3F29">
           <End Role="Employee_Login" Type="Self.Employee_Login" Multiplicity="1" />
           <End Role="Employee_Roles" Type="Self.Employee_Roles" Multiplicity="*" />
@@ -274,6 +315,30 @@
             </Principal>
             <Dependent Role="Employee_Details">
               <PropertyRef Name="LoginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee___Resum__49C3F6B7">
+          <End Role="Employee_Resumes" Type="Self.Employee_Resumes" Multiplicity="1" />
+          <End Role="Employee_Certification" Type="Self.Employee_Certification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Resumes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Certification">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee___Resum__4AB81AF0">
+          <End Role="Employee_Resumes" Type="Self.Employee_Resumes" Multiplicity="1" />
+          <End Role="Employee_Key_Skills" Type="Self.Employee_Key_Skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Resumes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Key_Skills">
+              <PropertyRef Name="ResumeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -373,6 +438,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Jobs__JobTypeId__5629CD9C">
+          <End Role="Job_Type" Type="Self.Job_Type" Multiplicity="1" />
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Jobs">
+              <PropertyRef Name="JobTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK__Jobs__LocationId__571DF1D5' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK__Jobs__LocationId__571DF1D5" />-->
         <Association Name="FK__Jobs_Appl__Appli__5DCAEF64">
           <End Role="Employee_Login" Type="Self.Employee_Login" Multiplicity="1" />
           <End Role="Jobs_Applied" Type="Self.Jobs_Applied" Multiplicity="*" />
@@ -445,6 +525,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Location___Count__5535A963">
+          <End Role="Reference_Country" Type="Self.Reference_Country" Multiplicity="1" />
+          <End Role="Location_Address" Type="Self.Location_Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference_Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Location_Address">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Location___State__5441852A">
+          <End Role="Reference_State" Type="Self.Reference_State" Multiplicity="1" />
+          <End Role="Location_Address" Type="Self.Location_Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference_State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Location_Address">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Location_A__City__534D60F1">
+          <End Role="Reference_City" Type="Self.Reference_City" Multiplicity="1" />
+          <End Role="Location_Address" Type="Self.Location_Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference_City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Location_Address">
+              <PropertyRef Name="City" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resume_Wo__Resum__47DBAE45">
+          <End Role="Employee_Resumes" Type="Self.Employee_Resumes" Multiplicity="1" />
+          <End Role="Resume_Work_History" Type="Self.Resume_Work_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Resumes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Resume_Work_History">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="JobSearchDBModelStoreContainer">
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_Associations_Clubs" EntityType="Self.Employee_Associations_Clubs" Schema="dbo" store:Type="Tables" />
@@ -462,6 +590,10 @@
           <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jobs_Applied" EntityType="Self.Jobs_Applied" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jobs_Hired" EntityType="Self.Jobs_Hired" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location_Address" EntityType="Self.Location_Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reference_City" EntityType="Self.Reference_City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reference_Country" EntityType="Self.Reference_Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reference_State" EntityType="Self.Reference_State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Resume_Work_History" EntityType="Self.Resume_Work_History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Salary_Type" EntityType="Self.Salary_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Work_Authorization_Type" EntityType="Self.Work_Authorization_Type" Schema="dbo" store:Type="Tables" />
@@ -492,6 +624,14 @@
           <AssociationSet Name="FK__Employee___Login__5070F446" Association="Self.FK__Employee___Login__5070F446">
             <End Role="Employee_Login" EntitySet="Employee_Login" />
             <End Role="Employee_Details" EntitySet="Employee_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee___Resum__49C3F6B7" Association="Self.FK__Employee___Resum__49C3F6B7">
+            <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+            <End Role="Employee_Certification" EntitySet="Employee_Certification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee___Resum__4AB81AF0" Association="Self.FK__Employee___Resum__4AB81AF0">
+            <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+            <End Role="Employee_Key_Skills" EntitySet="Employee_Key_Skills" />
           </AssociationSet>
           <AssociationSet Name="FK__Employee___UserI__75A278F5" Association="Self.FK__Employee___UserI__75A278F5">
             <End Role="Employee_Login" EntitySet="Employee_Login" />
@@ -525,6 +665,10 @@
             <End Role="Companies" EntitySet="Companies" />
             <End Role="Jobs" EntitySet="Jobs" />
           </AssociationSet>
+          <AssociationSet Name="FK__Jobs__JobTypeId__5629CD9C" Association="Self.FK__Jobs__JobTypeId__5629CD9C">
+            <End Role="Job_Type" EntitySet="Job_Type" />
+            <End Role="Jobs" EntitySet="Jobs" />
+          </AssociationSet>
           <AssociationSet Name="FK__Jobs_Appl__Appli__5DCAEF64" Association="Self.FK__Jobs_Appl__Appli__5DCAEF64">
             <End Role="Employee_Login" EntitySet="Employee_Login" />
             <End Role="Jobs_Applied" EntitySet="Jobs_Applied" />
@@ -549,6 +693,22 @@
             <End Role="Jobs" EntitySet="Jobs" />
             <End Role="Jobs_Hired" EntitySet="Jobs_Hired" />
           </AssociationSet>
+          <AssociationSet Name="FK__Location___Count__5535A963" Association="Self.FK__Location___Count__5535A963">
+            <End Role="Reference_Country" EntitySet="Reference_Country" />
+            <End Role="Location_Address" EntitySet="Location_Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Location___State__5441852A" Association="Self.FK__Location___State__5441852A">
+            <End Role="Reference_State" EntitySet="Reference_State" />
+            <End Role="Location_Address" EntitySet="Location_Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Location_A__City__534D60F1" Association="Self.FK__Location_A__City__534D60F1">
+            <End Role="Reference_City" EntitySet="Reference_City" />
+            <End Role="Location_Address" EntitySet="Location_Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resume_Wo__Resum__47DBAE45" Association="Self.FK__Resume_Wo__Resum__47DBAE45">
+            <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+            <End Role="Resume_Work_History" EntitySet="Resume_Work_History" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -556,7 +716,6 @@
       <Schema Namespace="JobSearchDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="JobSearchDBEntities" annotation:LazyLoadingEnabled="true" >
           <EntitySet Name="Companies" EntityType="JobSearchDBModel.Companies" />
-          <EntitySet Name="Employee_Details" EntityType="JobSearchDBModel.Employee_Details" />
           <EntitySet Name="Employee_Login" EntityType="JobSearchDBModel.Employee_Login" />
           <EntitySet Name="Employee_Roles" EntityType="JobSearchDBModel.Employee_Roles" />
           <EntitySet Name="Employee_Searches" EntityType="JobSearchDBModel.Employee_Searches" />
@@ -575,14 +734,6 @@
           <AssociationSet Name="FK__Jobs_Hire__Compa__6383C8BA" Association="JobSearchDBModel.FK__Jobs_Hire__Compa__6383C8BA">
             <End Role="Companies" EntitySet="Companies" />
             <End Role="Jobs_Hired" EntitySet="Jobs_Hired" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employee___JobTi__5165187F" Association="JobSearchDBModel.FK__Employee___JobTi__5165187F">
-            <End Role="Job_Type" EntitySet="Job_Type" />
-            <End Role="Employee_Details" EntitySet="Employee_Details" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employee___Login__5070F446" Association="JobSearchDBModel.FK__Employee___Login__5070F446">
-            <End Role="Employee_Login" EntitySet="Employee_Login" />
-            <End Role="Employee_Details" EntitySet="Employee_Details" />
           </AssociationSet>
           <AssociationSet Name="FK__Employee___Login__4BAC3F29" Association="JobSearchDBModel.FK__Employee___Login__4BAC3F29">
             <End Role="Employee_Login" EntitySet="Employee_Login" />
@@ -606,19 +757,61 @@
           </AssociationSet>
           <EntitySet Name="Job_Details" EntityType="JobSearchDBModel.Job_Details" />
           <EntitySet Name="Salary_Type" EntityType="JobSearchDBModel.Salary_Type" />
+          <AssociationSet Name="FK__Job_Detai__Salar__7D439ABD" Association="JobSearchDBModel.FK__Job_Detai__Salar__7D439ABD">
+            <End Role="Salary_Type" EntitySet="Salary_Type" />
+            <End Role="Job_Details" EntitySet="Job_Details" />
+          </AssociationSet>
+          <EntitySet Name="Employee_Associations_Clubs" EntityType="JobSearchDBModel.Employee_Associations_Clubs" />
+          <EntitySet Name="Employee_Certification" EntityType="JobSearchDBModel.Employee_Certification" />
+          <EntitySet Name="Employee_Education" EntityType="JobSearchDBModel.Employee_Education" />
+          <EntitySet Name="Employee_Key_Skills" EntityType="JobSearchDBModel.Employee_Key_Skills" />
+          <EntitySet Name="Employee_Resumes" EntityType="JobSearchDBModel.Employee_Resumes" />
+          <EntitySet Name="Resume_Work_History" EntityType="JobSearchDBModel.Resume_Work_History" />
+          <AssociationSet Name="FK__Employee___EmpId__08B54D69" Association="JobSearchDBModel.FK__Employee___EmpId__08B54D69">
+            <End Role="Employee_Login" EntitySet="Employee_Login" />
+            <End Role="Employee_Associations_Clubs" EntitySet="Employee_Associations_Clubs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee___EmpId__05D8E0BE" Association="JobSearchDBModel.FK__Employee___EmpId__05D8E0BE">
+            <End Role="Employee_Login" EntitySet="Employee_Login" />
+            <End Role="Employee_Education" EntitySet="Employee_Education" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee___EmpId__2180FB33" Association="JobSearchDBModel.FK__Employee___EmpId__2180FB33">
+            <End Role="Employee_Login" EntitySet="Employee_Login" />
+            <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee___Resum__49C3F6B7" Association="JobSearchDBModel.FK__Employee___Resum__49C3F6B7">
+            <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+            <End Role="Employee_Certification" EntitySet="Employee_Certification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee___Resum__4AB81AF0" Association="JobSearchDBModel.FK__Employee___Resum__4AB81AF0">
+            <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+            <End Role="Employee_Key_Skills" EntitySet="Employee_Key_Skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resume_Wo__Resum__47DBAE45" Association="JobSearchDBModel.FK__Resume_Wo__Resum__47DBAE45">
+            <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+            <End Role="Resume_Work_History" EntitySet="Resume_Work_History" />
+          </AssociationSet>
           <EntitySet Name="Work_Authorization_Type" EntityType="JobSearchDBModel.Work_Authorization_Type" />
           <AssociationSet Name="FK__Job_Detai__MinWo__7E37BEF6" Association="JobSearchDBModel.FK__Job_Detai__MinWo__7E37BEF6">
             <End Role="Work_Authorization_Type" EntitySet="Work_Authorization_Type" />
             <End Role="Job_Details" EntitySet="Job_Details" />
           </AssociationSet>
-          <AssociationSet Name="FK__Job_Detai__Salar__7D439ABD" Association="JobSearchDBModel.FK__Job_Detai__Salar__7D439ABD">
-            <End Role="Salary_Type" EntitySet="Salary_Type" />
-            <End Role="Job_Details" EntitySet="Job_Details" />
-          </AssociationSet>
+          <EntitySet Name="Reference_City" EntityType="JobSearchDBModel.Reference_City" />
+          <EntitySet Name="Reference_Country" EntityType="JobSearchDBModel.Reference_Country" />
+          <EntitySet Name="Reference_State" EntityType="JobSearchDBModel.Reference_State" />
+          <EntitySet Name="Employee_Details" EntityType="JobSearchDBModel.Employee_Details" />
           <EntitySet Name="Jobs" EntityType="JobSearchDBModel.Jobs" />
           <AssociationSet Name="FK__Jobs__CompanyId__571DF1D5" Association="JobSearchDBModel.FK__Jobs__CompanyId__571DF1D5">
             <End Role="Companies" EntitySet="Companies" />
             <End Role="Jobs" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee___JobTi__5165187F" Association="JobSearchDBModel.FK__Employee___JobTi__5165187F">
+            <End Role="Job_Type" EntitySet="Job_Type" />
+            <End Role="Employee_Details" EntitySet="Employee_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee___Login__5070F446" Association="JobSearchDBModel.FK__Employee___Login__5070F446">
+            <End Role="Employee_Login" EntitySet="Employee_Login" />
+            <End Role="Employee_Details" EntitySet="Employee_Details" />
           </AssociationSet>
           <AssociationSet Name="FK__Employee___JobId__74AE54BC" Association="JobSearchDBModel.FK__Employee___JobId__74AE54BC">
             <End Role="Jobs" EntitySet="Jobs" />
@@ -644,23 +837,18 @@
             <End Role="Jobs" EntitySet="Jobs" />
             <End Role="Jobs_Hired" EntitySet="Jobs_Hired" />
           </AssociationSet>
-          <EntitySet Name="Employee_Associations_Clubs" EntityType="JobSearchDBModel.Employee_Associations_Clubs" />
-          <EntitySet Name="Employee_Certification" EntityType="JobSearchDBModel.Employee_Certification" />
-          <EntitySet Name="Employee_Education" EntityType="JobSearchDBModel.Employee_Education" />
-          <EntitySet Name="Employee_Key_Skills" EntityType="JobSearchDBModel.Employee_Key_Skills" />
-          <EntitySet Name="Employee_Resumes" EntityType="JobSearchDBModel.Employee_Resumes" />
-          <EntitySet Name="Resume_Work_History" EntityType="JobSearchDBModel.Resume_Work_History" />
-          <AssociationSet Name="FK__Employee___EmpId__08B54D69" Association="JobSearchDBModel.FK__Employee___EmpId__08B54D69">
-            <End Role="Employee_Login" EntitySet="Employee_Login" />
-            <End Role="Employee_Associations_Clubs" EntitySet="Employee_Associations_Clubs" />
+          <EntitySet Name="Location_Address" EntityType="JobSearchDBModel.Location_Address" />
+          <AssociationSet Name="FK__Location___Count__5535A963" Association="JobSearchDBModel.FK__Location___Count__5535A963">
+            <End Role="Reference_Country" EntitySet="Reference_Country" />
+            <End Role="Location_Address" EntitySet="Location_Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Employee___EmpId__05D8E0BE" Association="JobSearchDBModel.FK__Employee___EmpId__05D8E0BE">
-            <End Role="Employee_Login" EntitySet="Employee_Login" />
-            <End Role="Employee_Education" EntitySet="Employee_Education" />
+          <AssociationSet Name="FK__Location___State__5441852A" Association="JobSearchDBModel.FK__Location___State__5441852A">
+            <End Role="Reference_State" EntitySet="Reference_State" />
+            <End Role="Location_Address" EntitySet="Location_Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Employee___EmpId__2180FB33" Association="JobSearchDBModel.FK__Employee___EmpId__2180FB33">
-            <End Role="Employee_Login" EntitySet="Employee_Login" />
-            <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+          <AssociationSet Name="FK__Location_A__City__534D60F1" Association="JobSearchDBModel.FK__Location_A__City__534D60F1">
+            <End Role="Reference_City" EntitySet="Reference_City" />
+            <End Role="Location_Address" EntitySet="Location_Address" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Companies">
@@ -675,21 +863,6 @@
           <NavigationProperty Name="Jobs_Hired" Relationship="JobSearchDBModel.FK__Jobs_Hire__Compa__6383C8BA" FromRole="Companies" ToRole="Jobs_Hired" />
           <NavigationProperty Name="Jobs" Relationship="JobSearchDBModel.FK__Jobs__CompanyId__571DF1D5" FromRole="Companies" ToRole="Jobs" />
         </EntityType>
-        <EntityType Name="Employee_Details">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LoginId" Type="Int32" Nullable="false" />
-          <Property Name="Firstname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Lastname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="JobTitleId" Type="Int32" Nullable="false" />
-          <Property Name="SignUpDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Job_Type" Relationship="JobSearchDBModel.FK__Employee___JobTi__5165187F" FromRole="Employee_Details" ToRole="Job_Type" />
-          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.FK__Employee___Login__5070F446" FromRole="Employee_Details" ToRole="Employee_Login" />
-        </EntityType>
         <EntityType Name="Employee_Login">
           <Key>
             <PropertyRef Name="Id" />
@@ -699,7 +872,6 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="TwoFKey" Type="Guid" />
-          <NavigationProperty Name="Employee_Details" Relationship="JobSearchDBModel.FK__Employee___Login__5070F446" FromRole="Employee_Login" ToRole="Employee_Details" />
           <NavigationProperty Name="Employee_Roles" Relationship="JobSearchDBModel.FK__Employee___Login__4BAC3F29" FromRole="Employee_Login" ToRole="Employee_Roles" />
           <NavigationProperty Name="Employee_Searches" Relationship="JobSearchDBModel.FK__Employee___UserI__75A278F5" FromRole="Employee_Login" ToRole="Employee_Searches" />
           <NavigationProperty Name="Job_Reviews" Relationship="JobSearchDBModel.FK__Job_Revie__Emplo__6754599E" FromRole="Employee_Login" ToRole="Job_Reviews" />
@@ -708,6 +880,7 @@
           <NavigationProperty Name="Employee_Associations_Clubs" Relationship="JobSearchDBModel.FK__Employee___EmpId__08B54D69" FromRole="Employee_Login" ToRole="Employee_Associations_Clubs" />
           <NavigationProperty Name="Employee_Education" Relationship="JobSearchDBModel.FK__Employee___EmpId__05D8E0BE" FromRole="Employee_Login" ToRole="Employee_Education" />
           <NavigationProperty Name="Employee_Resumes" Relationship="JobSearchDBModel.FK__Employee___EmpId__2180FB33" FromRole="Employee_Login" ToRole="Employee_Resumes" />
+          <NavigationProperty Name="Employee_Details" Relationship="JobSearchDBModel.FK__Employee___Login__5070F446" FromRole="Employee_Login" ToRole="Employee_Details" />
         </EntityType>
         <EntityType Name="Employee_Roles">
           <Key>
@@ -815,30 +988,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Employee___JobTi__5165187F">
-          <End Type="JobSearchDBModel.Job_Type" Role="Job_Type" Multiplicity="1" />
-          <End Type="JobSearchDBModel.Employee_Details" Role="Employee_Details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Job_Type">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Employee_Details">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Employee___Login__5070F446">
-          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
-          <End Type="JobSearchDBModel.Employee_Details" Role="Employee_Details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee_Login">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Employee_Details">
-              <PropertyRef Name="LoginId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Employee___Login__4BAC3F29">
           <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
           <End Type="JobSearchDBModel.Employee_Roles" Role="Employee_Roles" Multiplicity="*" />
@@ -910,8 +1059,8 @@
           <Property Name="SalaryMax" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SalaryType" Type="Int32" Nullable="false" />
           <Property Name="MinWorkAuthorization" Type="Int32" />
-          <NavigationProperty Name="Work_Authorization_Type" Relationship="JobSearchDBModel.FK__Job_Detai__MinWo__7E37BEF6" FromRole="Job_Details" ToRole="Work_Authorization_Type" />
           <NavigationProperty Name="Salary_Type" Relationship="JobSearchDBModel.FK__Job_Detai__Salar__7D439ABD" FromRole="Job_Details" ToRole="Salary_Type" />
+          <NavigationProperty Name="Work_Authorization_Type" Relationship="JobSearchDBModel.FK__Job_Detai__MinWo__7E37BEF6" FromRole="Job_Details" ToRole="Work_Authorization_Type" />
           <NavigationProperty Name="Jobs" Relationship="JobSearchDBModel.FK__Job_Detai__JobId__7C4F7684" FromRole="Job_Details" ToRole="Jobs" />
         </EntityType>
         <EntityType Name="Salary_Type">
@@ -922,6 +1071,167 @@
           <Property Name="PayType" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Job_Details" Relationship="JobSearchDBModel.FK__Job_Detai__Salar__7D439ABD" FromRole="Salary_Type" ToRole="Job_Details" />
         </EntityType>
+        <Association Name="FK__Job_Detai__Salar__7D439ABD">
+          <End Type="JobSearchDBModel.Salary_Type" Role="Salary_Type" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Job_Details" Role="Job_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salary_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Job_Details">
+              <PropertyRef Name="SalaryType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Employee_Associations_Clubs">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.FK__Employee___EmpId__08B54D69" FromRole="Employee_Associations_Clubs" ToRole="Employee_Login" />
+        </EntityType>
+        <EntityType Name="Employee_Certification">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Certification" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Certification" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ResumeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee_Resumes" Relationship="JobSearchDBModel.FK__Employee___Resum__49C3F6B7" FromRole="Employee_Certification" ToRole="Employee_Resumes" />
+        </EntityType>
+        <EntityType Name="Employee_Education">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="University" />
+            <PropertyRef Name="Degree" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="University" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GraduationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Degree" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.FK__Employee___EmpId__05D8E0BE" FromRole="Employee_Education" ToRole="Employee_Login" />
+        </EntityType>
+        <EntityType Name="Employee_Key_Skills">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ResumeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee_Resumes" Relationship="JobSearchDBModel.FK__Employee___Resum__4AB81AF0" FromRole="Employee_Key_Skills" ToRole="Employee_Resumes" />
+        </EntityType>
+        <EntityType Name="Employee_Resumes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Experience" Type="Int32" />
+          <Property Name="KeySkillsId" Type="Guid" />
+          <Property Name="WorkHistoryId" Type="Guid" />
+          <Property Name="EducationId" Type="Guid" />
+          <Property Name="CertificationId" Type="Guid" />
+          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.FK__Employee___EmpId__2180FB33" FromRole="Employee_Resumes" ToRole="Employee_Login" />
+          <NavigationProperty Name="Employee_Certification" Relationship="JobSearchDBModel.FK__Employee___Resum__49C3F6B7" FromRole="Employee_Resumes" ToRole="Employee_Certification" />
+          <NavigationProperty Name="Employee_Key_Skills" Relationship="JobSearchDBModel.FK__Employee___Resum__4AB81AF0" FromRole="Employee_Resumes" ToRole="Employee_Key_Skills" />
+          <NavigationProperty Name="Resume_Work_History" Relationship="JobSearchDBModel.FK__Resume_Wo__Resum__47DBAE45" FromRole="Employee_Resumes" ToRole="Resume_Work_History" />
+        </EntityType>
+        <EntityType Name="Resume_Work_History">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="CompanyName" />
+            <PropertyRef Name="JobTitleName" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="JobTitleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ResumeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee_Resumes" Relationship="JobSearchDBModel.FK__Resume_Wo__Resum__47DBAE45" FromRole="Resume_Work_History" ToRole="Employee_Resumes" />
+        </EntityType>
+        <Association Name="FK__Employee___EmpId__08B54D69">
+          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Employee_Associations_Clubs" Role="Employee_Associations_Clubs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Login">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Associations_Clubs">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee___EmpId__05D8E0BE">
+          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Employee_Education" Role="Employee_Education" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Login">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Education">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee___EmpId__2180FB33">
+          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Employee_Resumes" Role="Employee_Resumes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Login">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Resumes">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee___Resum__49C3F6B7">
+          <End Type="JobSearchDBModel.Employee_Resumes" Role="Employee_Resumes" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Employee_Certification" Role="Employee_Certification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Resumes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Certification">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee___Resum__4AB81AF0">
+          <End Type="JobSearchDBModel.Employee_Resumes" Role="Employee_Resumes" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Employee_Key_Skills" Role="Employee_Key_Skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Resumes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Key_Skills">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resume_Wo__Resum__47DBAE45">
+          <End Type="JobSearchDBModel.Employee_Resumes" Role="Employee_Resumes" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Resume_Work_History" Role="Resume_Work_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Resumes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Resume_Work_History">
+              <PropertyRef Name="ResumeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="Work_Authorization_Type">
           <Key>
             <PropertyRef Name="Id" />
@@ -942,18 +1252,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Job_Detai__Salar__7D439ABD">
-          <End Type="JobSearchDBModel.Salary_Type" Role="Salary_Type" Multiplicity="1" />
-          <End Type="JobSearchDBModel.Job_Details" Role="Job_Details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Salary_Type">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Job_Details">
-              <PropertyRef Name="SalaryType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="Reference_City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Location_Address" Relationship="JobSearchDBModel.FK__Location_A__City__534D60F1" FromRole="Reference_City" ToRole="Location_Address" />
+        </EntityType>
+        <EntityType Name="Reference_Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Location_Address" Relationship="JobSearchDBModel.FK__Location___Count__5535A963" FromRole="Reference_Country" ToRole="Location_Address" />
+        </EntityType>
+        <EntityType Name="Reference_State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Location_Address" Relationship="JobSearchDBModel.FK__Location___State__5441852A" FromRole="Reference_State" ToRole="Location_Address" />
+        </EntityType>
+        <EntityType Name="Employee_Details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginId" Type="Int32" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="JobTitleId" Type="Int32" Nullable="false" />
+          <Property Name="SignUpDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LocationId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Job_Type" Relationship="JobSearchDBModel.FK__Employee___JobTi__5165187F" FromRole="Employee_Details" ToRole="Job_Type" />
+          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.FK__Employee___Login__5070F446" FromRole="Employee_Details" ToRole="Employee_Login" />
+        </EntityType>
         <EntityType Name="Jobs">
           <Key>
             <PropertyRef Name="Id" />
@@ -963,6 +1301,7 @@
           <Property Name="JobTypeId" Type="Int32" Nullable="false" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <Property Name="DatePosted" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LocationId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Companies" Relationship="JobSearchDBModel.FK__Jobs__CompanyId__571DF1D5" FromRole="Jobs" ToRole="Companies" />
           <NavigationProperty Name="Employee_Searches" Relationship="JobSearchDBModel.FK__Employee___JobId__74AE54BC" FromRole="Jobs" ToRole="Employee_Searches" />
           <NavigationProperty Name="Job_Details" Relationship="JobSearchDBModel.FK__Job_Detai__JobId__7C4F7684" FromRole="Jobs" ToRole="Job_Details" />
@@ -980,6 +1319,30 @@
             </Principal>
             <Dependent Role="Jobs">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee___JobTi__5165187F">
+          <End Type="JobSearchDBModel.Job_Type" Role="Job_Type" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Employee_Details" Role="Employee_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Details">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee___Login__5070F446">
+          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Employee_Details" Role="Employee_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Login">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Details">
+              <PropertyRef Name="LoginId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1055,107 +1418,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Employee_Associations_Clubs">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="EmpId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.FK__Employee___EmpId__08B54D69" FromRole="Employee_Associations_Clubs" ToRole="Employee_Login" />
-        </EntityType>
-        <EntityType Name="Employee_Certification">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Certification" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Certification" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="Employee_Education">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="University" />
-            <PropertyRef Name="Degree" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="EmpId" Type="Int32" Nullable="false" />
-          <Property Name="University" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="GraduationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Degree" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.FK__Employee___EmpId__05D8E0BE" FromRole="Employee_Education" ToRole="Employee_Login" />
-        </EntityType>
-        <EntityType Name="Employee_Key_Skills">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Employee_Resumes">
+        <EntityType Name="Location_Address">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmpId" Type="Int32" Nullable="false" />
-          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Experience" Type="Int32" />
-          <Property Name="KeySkillsId" Type="Guid" />
-          <Property Name="WorkHistoryId" Type="Guid" />
-          <Property Name="EducationId" Type="Guid" />
-          <Property Name="CertificationId" Type="Guid" />
-          <NavigationProperty Name="Employee_Login" Relationship="JobSearchDBModel.FK__Employee___EmpId__2180FB33" FromRole="Employee_Resumes" ToRole="Employee_Login" />
+          <Property Name="Street" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="Int32" Nullable="false" />
+          <Property Name="City" Type="Int32" Nullable="false" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <Property Name="Country" Type="Int32" Nullable="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Reference_Country" Relationship="JobSearchDBModel.FK__Location___Count__5535A963" FromRole="Location_Address" ToRole="Reference_Country" />
+          <NavigationProperty Name="Reference_State" Relationship="JobSearchDBModel.FK__Location___State__5441852A" FromRole="Location_Address" ToRole="Reference_State" />
+          <NavigationProperty Name="Reference_City" Relationship="JobSearchDBModel.FK__Location_A__City__534D60F1" FromRole="Location_Address" ToRole="Reference_City" />
         </EntityType>
-        <EntityType Name="Resume_Work_History">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="CompanyName" />
-            <PropertyRef Name="JobTitleName" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="JobTitleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK__Employee___EmpId__08B54D69">
-          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
-          <End Type="JobSearchDBModel.Employee_Associations_Clubs" Role="Employee_Associations_Clubs" Multiplicity="*" />
+        <Association Name="FK__Location___Count__5535A963">
+          <End Type="JobSearchDBModel.Reference_Country" Role="Reference_Country" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Location_Address" Role="Location_Address" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Employee_Login">
+            <Principal Role="Reference_Country">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Employee_Associations_Clubs">
-              <PropertyRef Name="EmpId" />
+            <Dependent Role="Location_Address">
+              <PropertyRef Name="Country" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Employee___EmpId__05D8E0BE">
-          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
-          <End Type="JobSearchDBModel.Employee_Education" Role="Employee_Education" Multiplicity="*" />
+        <Association Name="FK__Location___State__5441852A">
+          <End Type="JobSearchDBModel.Reference_State" Role="Reference_State" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Location_Address" Role="Location_Address" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Employee_Login">
+            <Principal Role="Reference_State">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Employee_Education">
-              <PropertyRef Name="EmpId" />
+            <Dependent Role="Location_Address">
+              <PropertyRef Name="State" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Employee___EmpId__2180FB33">
-          <End Type="JobSearchDBModel.Employee_Login" Role="Employee_Login" Multiplicity="1" />
-          <End Type="JobSearchDBModel.Employee_Resumes" Role="Employee_Resumes" Multiplicity="*" />
+        <Association Name="FK__Location_A__City__534D60F1">
+          <End Type="JobSearchDBModel.Reference_City" Role="Reference_City" Multiplicity="1" />
+          <End Type="JobSearchDBModel.Location_Address" Role="Location_Address" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Employee_Login">
+            <Principal Role="Reference_City">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Employee_Resumes">
-              <PropertyRef Name="EmpId" />
+            <Dependent Role="Location_Address">
+              <PropertyRef Name="City" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1163,12 +1473,205 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="JobSearchDBModelStoreContainer" CdmEntityContainer="JobSearchDBEntities" >
-          <EntitySetMapping Name="Companies">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Companies">
-              <MappingFragment StoreEntitySet="Companies">
-                <ScalarProperty Name="Description" ColumnName="Description" />
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="JobSearchDBModelStoreContainer" CdmEntityContainer="JobSearchDBEntities">
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Companies)">
+        <MappingFragment StoreEntitySet="Companies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Login">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Login)">
+        <MappingFragment StoreEntitySet="Employee_Login">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="TwoFKey" ColumnName="TwoFKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Roles)">
+        <MappingFragment StoreEntitySet="Employee_Roles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Searches">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Searches)">
+        <MappingFragment StoreEntitySet="Employee_Searches">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="SearchDate" ColumnName="SearchDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Job_Reviews">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Job_Reviews)">
+        <MappingFragment StoreEntitySet="Job_Reviews">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Job_Type">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Job_Type)">
+        <MappingFragment StoreEntitySet="Job_Type">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jobs_Applied">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Jobs_Applied)">
+        <MappingFragment StoreEntitySet="Jobs_Applied">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="DateApplied" ColumnName="DateApplied" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jobs_Hired">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Jobs_Hired)">
+        <MappingFragment StoreEntitySet="Jobs_Hired">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="DateHired" ColumnName="DateHired" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Job_Details">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Job_Details)">
+        <MappingFragment StoreEntitySet="Job_Details">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+          <ScalarProperty Name="SalaryMin" ColumnName="SalaryMin" />
+          <ScalarProperty Name="SalaryMax" ColumnName="SalaryMax" />
+          <ScalarProperty Name="SalaryType" ColumnName="SalaryType" />
+          <ScalarProperty Name="MinWorkAuthorization" ColumnName="MinWorkAuthorization" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Salary_Type">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Salary_Type)">
+        <MappingFragment StoreEntitySet="Salary_Type">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PayType" ColumnName="PayType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Associations_Clubs">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Associations_Clubs)">
+        <MappingFragment StoreEntitySet="Employee_Associations_Clubs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Certification">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Certification)">
+        <MappingFragment StoreEntitySet="Employee_Certification">
+          <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Certification" ColumnName="Certification" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Education">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Education)">
+        <MappingFragment StoreEntitySet="Employee_Education">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="University" ColumnName="University" />
+          <ScalarProperty Name="Degree" ColumnName="Degree" />
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="GraduationDate" ColumnName="GraduationDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Key_Skills">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Key_Skills)">
+        <MappingFragment StoreEntitySet="Employee_Key_Skills">
+          <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Resumes">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Resumes)">
+        <MappingFragment StoreEntitySet="Employee_Resumes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="Summary" ColumnName="Summary" />
+          <ScalarProperty Name="Experience" ColumnName="Experience" />
+          <ScalarProperty Name="KeySkillsId" ColumnName="KeySkillsId" />
+          <ScalarProperty Name="WorkHistoryId" ColumnName="WorkHistoryId" />
+          <ScalarProperty Name="EducationId" ColumnName="EducationId" />
+          <ScalarProperty Name="CertificationId" ColumnName="CertificationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Resume_Work_History">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Resume_Work_History)">
+        <MappingFragment StoreEntitySet="Resume_Work_History">
+          <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="JobTitleName" ColumnName="JobTitleName" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="Work_Authorization_Type">
+            <EntityTypeMapping TypeName="JobSearchDBModel.Work_Authorization_Type">
+              <MappingFragment StoreEntitySet="Work_Authorization_Type">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reference_City">
+            <EntityTypeMapping TypeName="JobSearchDBModel.Reference_City">
+              <MappingFragment StoreEntitySet="Reference_City">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reference_Country">
+            <EntityTypeMapping TypeName="JobSearchDBModel.Reference_Country">
+              <MappingFragment StoreEntitySet="Reference_Country">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reference_State">
+            <EntityTypeMapping TypeName="JobSearchDBModel.Reference_State">
+              <MappingFragment StoreEntitySet="Reference_State">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1177,6 +1680,7 @@
           <EntitySetMapping Name="Employee_Details">
             <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Details">
               <MappingFragment StoreEntitySet="Employee_Details">
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="SignUpDate" ColumnName="SignUpDate" />
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1188,111 +1692,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Employee_Login">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Login">
-              <MappingFragment StoreEntitySet="Employee_Login">
-                <ScalarProperty Name="TwoFKey" ColumnName="TwoFKey" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employee_Roles">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Roles">
-              <MappingFragment StoreEntitySet="Employee_Roles">
-                <ScalarProperty Name="Rolename" ColumnName="Rolename" />
-                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employee_Searches">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Searches">
-              <MappingFragment StoreEntitySet="Employee_Searches">
-                <ScalarProperty Name="SearchDate" ColumnName="SearchDate" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Job_Reviews">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Job_Reviews">
-              <MappingFragment StoreEntitySet="Job_Reviews">
-                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Job_Type">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Job_Type">
-              <MappingFragment StoreEntitySet="Job_Type">
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Jobs_Applied">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Jobs_Applied">
-              <MappingFragment StoreEntitySet="Jobs_Applied">
-                <ScalarProperty Name="DateApplied" ColumnName="DateApplied" />
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Jobs_Hired">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Jobs_Hired">
-              <MappingFragment StoreEntitySet="Jobs_Hired">
-                <ScalarProperty Name="DateHired" ColumnName="DateHired" />
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Job_Details">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Job_Details">
-              <MappingFragment StoreEntitySet="Job_Details">
-                <ScalarProperty Name="MinWorkAuthorization" ColumnName="MinWorkAuthorization" />
-                <ScalarProperty Name="SalaryType" ColumnName="SalaryType" />
-                <ScalarProperty Name="SalaryMax" ColumnName="SalaryMax" />
-                <ScalarProperty Name="SalaryMin" ColumnName="SalaryMin" />
-                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Salary_Type">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Salary_Type">
-              <MappingFragment StoreEntitySet="Salary_Type">
-                <ScalarProperty Name="PayType" ColumnName="PayType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Work_Authorization_Type">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Work_Authorization_Type">
-              <MappingFragment StoreEntitySet="Work_Authorization_Type">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Jobs">
             <EntityTypeMapping TypeName="JobSearchDBModel.Jobs">
               <MappingFragment StoreEntitySet="Jobs">
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="JobTypeId" ColumnName="JobTypeId" />
@@ -1301,73 +1704,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Employee_Associations_Clubs">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Associations_Clubs">
-              <MappingFragment StoreEntitySet="Employee_Associations_Clubs">
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <EntitySetMapping Name="Location_Address">
+            <EntityTypeMapping TypeName="JobSearchDBModel.Location_Address">
+              <MappingFragment StoreEntitySet="Location_Address">
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Employee_Certification">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Certification">
-              <MappingFragment StoreEntitySet="Employee_Certification">
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Certification" ColumnName="Certification" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employee_Education">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Education">
-              <MappingFragment StoreEntitySet="Employee_Education">
-                <ScalarProperty Name="Degree" ColumnName="Degree" />
-                <ScalarProperty Name="GraduationDate" ColumnName="GraduationDate" />
-                <ScalarProperty Name="University" ColumnName="University" />
-                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employee_Key_Skills">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Key_Skills">
-              <MappingFragment StoreEntitySet="Employee_Key_Skills">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employee_Resumes">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Resumes">
-              <MappingFragment StoreEntitySet="Employee_Resumes">
-                <ScalarProperty Name="CertificationId" ColumnName="CertificationId" />
-                <ScalarProperty Name="EducationId" ColumnName="EducationId" />
-                <ScalarProperty Name="WorkHistoryId" ColumnName="WorkHistoryId" />
-                <ScalarProperty Name="KeySkillsId" ColumnName="KeySkillsId" />
-                <ScalarProperty Name="Experience" ColumnName="Experience" />
-                <ScalarProperty Name="Summary" ColumnName="Summary" />
-                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Resume_Work_History">
-            <EntityTypeMapping TypeName="JobSearchDBModel.Resume_Work_History">
-              <MappingFragment StoreEntitySet="Resume_Work_History">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="JobTitleName" ColumnName="JobTitleName" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -1381,7 +1732,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

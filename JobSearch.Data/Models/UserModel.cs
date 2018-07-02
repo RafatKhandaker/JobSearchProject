@@ -14,7 +14,11 @@ namespace JobSearch.Data.Models
         private string fName;
         private string lName;
         private string email;
-        private string address;
+        private string streetAddress;
+        private int zipCode;
+        private string city;
+        private string state;
+        private string country;
         private int jobTitleId;
 
         public UserModel() { }
@@ -27,7 +31,11 @@ namespace JobSearch.Data.Models
             string fName,
             string lName,
             string email,
-            string address,
+            string streetAddress,
+            int zipCode,
+            string city,
+            string state,
+            string country,
             int jobTitleId,
             int jobType
         )
@@ -38,7 +46,10 @@ namespace JobSearch.Data.Models
             this.fName = fName;
             this.lName = lName;
             this.email = email;
-            this.address = address;
+            this.streetAddress = streetAddress;
+            this.city = city;
+            this.state = state;
+            this.country = country;
             this.jobTitleId = jobTitleId;
         }
 
@@ -48,7 +59,11 @@ namespace JobSearch.Data.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public string Address { get; set; }
+        public string StreetAddress { get; set; }
+        public int ZipCode { get; set; }
+        public int City { get; set; }
+        public int State { get; set; }
+        public int Country { get; set; }
         public int JobTitleId { get; set; }
 
     }

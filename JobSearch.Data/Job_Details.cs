@@ -22,8 +22,8 @@ namespace JobSearch.Data
         public int SalaryType { get; set; }
         public Nullable<int> MinWorkAuthorization { get; set; }
     
-        public virtual Work_Authorization_Type Work_Authorization_Type { get; set; }
         public virtual Salary_Type Salary_Type { get; set; }
+        public virtual Work_Authorization_Type Work_Authorization_Type { get; set; }
         public virtual Jobs Jobs { get; set; }
     }
 }

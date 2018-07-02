@@ -2,119 +2,197 @@
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="JobSearchDBModelStoreContainer" CdmEntityContainer="JobSearchDBEntities">
     <EntitySetMapping Name="Companies">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Companies">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Companies)">
         <MappingFragment StoreEntitySet="Companies">
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Employee_Details">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Details">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Details)">
         <MappingFragment StoreEntitySet="Employee_Details">
-          <ScalarProperty Name="SignUpDate" ColumnName="SignUpDate" />
-          <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Lastname" ColumnName="Lastname" />
-          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
-          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+          <ScalarProperty Name="SignUpDate" ColumnName="SignUpDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Employee_Login">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Login">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Login)">
         <MappingFragment StoreEntitySet="Employee_Login">
-          <ScalarProperty Name="TwoFKey" ColumnName="TwoFKey" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="TwoFKey" ColumnName="TwoFKey" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Employee_Roles">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Roles)">
         <MappingFragment StoreEntitySet="Employee_Roles">
-          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
-          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Employee_Searches">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Employee_Searches">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Searches)">
         <MappingFragment StoreEntitySet="Employee_Searches">
-          <ScalarProperty Name="SearchDate" ColumnName="SearchDate" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="JobId" ColumnName="JobId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="SearchDate" ColumnName="SearchDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Job_Reviews">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Job_Reviews">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Job_Reviews)">
         <MappingFragment StoreEntitySet="Job_Reviews">
-          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
-          <ScalarProperty Name="Comments" ColumnName="Comments" />
-          <ScalarProperty Name="Rating" ColumnName="Rating" />
-          <ScalarProperty Name="JobId" ColumnName="JobId" />
-          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Job_Type">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Job_Type">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Job_Type)">
         <MappingFragment StoreEntitySet="Job_Type">
-          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Jobs_Applied">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Jobs_Applied">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Jobs_Applied)">
         <MappingFragment StoreEntitySet="Jobs_Applied">
-          <ScalarProperty Name="DateApplied" ColumnName="DateApplied" />
-          <ScalarProperty Name="JobId" ColumnName="JobId" />
-          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-          <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="DateApplied" ColumnName="DateApplied" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Jobs_Hired">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Jobs_Hired">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Jobs_Hired)">
         <MappingFragment StoreEntitySet="Jobs_Hired">
-          <ScalarProperty Name="DateHired" ColumnName="DateHired" />
-          <ScalarProperty Name="JobId" ColumnName="JobId" />
-          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="DateHired" ColumnName="DateHired" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Job_Details">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Job_Details">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Job_Details)">
         <MappingFragment StoreEntitySet="Job_Details">
-          <ScalarProperty Name="MinWorkAuthorization" ColumnName="MinWorkAuthorization" />
-          <ScalarProperty Name="SalaryType" ColumnName="SalaryType" />
-          <ScalarProperty Name="SalaryMax" ColumnName="SalaryMax" />
-          <ScalarProperty Name="SalaryMin" ColumnName="SalaryMin" />
-          <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
-          <ScalarProperty Name="JobId" ColumnName="JobId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+          <ScalarProperty Name="SalaryMin" ColumnName="SalaryMin" />
+          <ScalarProperty Name="SalaryMax" ColumnName="SalaryMax" />
+          <ScalarProperty Name="SalaryType" ColumnName="SalaryType" />
+          <ScalarProperty Name="MinWorkAuthorization" ColumnName="MinWorkAuthorization" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Salary_Type">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Salary_Type">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Salary_Type)">
         <MappingFragment StoreEntitySet="Salary_Type">
-          <ScalarProperty Name="PayType" ColumnName="PayType" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PayType" ColumnName="PayType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jobs">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Jobs)">
+        <MappingFragment StoreEntitySet="Jobs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="JobName" ColumnName="JobName" />
+          <ScalarProperty Name="JobTypeId" ColumnName="JobTypeId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Associations_Clubs">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Associations_Clubs)">
+        <MappingFragment StoreEntitySet="Employee_Associations_Clubs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Certification">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Certification)">
+        <MappingFragment StoreEntitySet="Employee_Certification">
+          <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Certification" ColumnName="Certification" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Education">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Education)">
+        <MappingFragment StoreEntitySet="Employee_Education">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="University" ColumnName="University" />
+          <ScalarProperty Name="Degree" ColumnName="Degree" />
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="GraduationDate" ColumnName="GraduationDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Key_Skills">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Key_Skills)">
+        <MappingFragment StoreEntitySet="Employee_Key_Skills">
+          <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Resumes">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Employee_Resumes)">
+        <MappingFragment StoreEntitySet="Employee_Resumes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="Summary" ColumnName="Summary" />
+          <ScalarProperty Name="Experience" ColumnName="Experience" />
+          <ScalarProperty Name="KeySkillsId" ColumnName="KeySkillsId" />
+          <ScalarProperty Name="WorkHistoryId" ColumnName="WorkHistoryId" />
+          <ScalarProperty Name="EducationId" ColumnName="EducationId" />
+          <ScalarProperty Name="CertificationId" ColumnName="CertificationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Resume_Work_History">
+      <EntityTypeMapping TypeName="IsTypeOf(JobSearchDBModel.Resume_Work_History)">
+        <MappingFragment StoreEntitySet="Resume_Work_History">
+          <ScalarProperty Name="ResumeId" ColumnName="ResumeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="JobTitleName" ColumnName="JobTitleName" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -122,17 +200,6 @@
       <EntityTypeMapping TypeName="JobSearchDBModel.Work_Authorization_Type">
         <MappingFragment StoreEntitySet="Work_Authorization_Type">
           <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Jobs">
-      <EntityTypeMapping TypeName="JobSearchDBModel.Jobs">
-        <MappingFragment StoreEntitySet="Jobs">
-          <ScalarProperty Name="DatePosted" ColumnName="DatePosted" />
-          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-          <ScalarProperty Name="JobTypeId" ColumnName="JobTypeId" />
-          <ScalarProperty Name="JobName" ColumnName="JobName" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -12,19 +12,18 @@ namespace JobSearch.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee_Details
+    public partial class Reference_State
     {
-        public int Id { get; set; }
-        public int LoginId { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public int JobTitleId { get; set; }
-        public System.DateTime SignUpDate { get; set; }
-        public System.Guid LocationId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Reference_State()
+        {
+            this.Location_Address = new HashSet<Location_Address>();
+        }
     
-        public virtual Job_Type Job_Type { get; set; }
-        public virtual Employee_Login Employee_Login { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Location_Address> Location_Address { get; set; }
     }
 }

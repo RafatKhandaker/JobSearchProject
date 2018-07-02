@@ -8,6 +8,26 @@
     <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="Description" Type="varchar(max)" />
   </EntityType>
+  <EntityType Name="Employee_Associations_Clubs">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="EmpId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee_Certification">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Certification" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Certification" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="ResumeId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Employee_Details">
     <Key>
       <PropertyRef Name="Id" />
@@ -21,6 +41,27 @@
     <Property Name="JobTitleId" Type="int" Nullable="false" />
     <Property Name="SignUpDate" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="Employee_Education">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="University" />
+      <PropertyRef Name="Degree" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="EmpId" Type="int" Nullable="false" />
+    <Property Name="University" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="GraduationDate" Type="datetime" Nullable="false" />
+    <Property Name="Degree" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee_Key_Skills">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ResumeId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Employee_Login">
     <Key>
       <PropertyRef Name="Id" />
@@ -30,6 +71,19 @@
     <Property Name="Password" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="RoleId" Type="int" Nullable="false" />
     <Property Name="TwoFKey" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Employee_Resumes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpId" Type="int" Nullable="false" />
+    <Property Name="Summary" Type="varchar(max)" />
+    <Property Name="Experience" Type="int" />
+    <Property Name="KeySkillsId" Type="uniqueidentifier" />
+    <Property Name="WorkHistoryId" Type="uniqueidentifier" />
+    <Property Name="EducationId" Type="uniqueidentifier" />
+    <Property Name="CertificationId" Type="uniqueidentifier" />
   </EntityType>
   <EntityType Name="Employee_Roles">
     <Key>
@@ -55,8 +109,8 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="JobId" Type="int" />
     <Property Name="JobDescription" Type="varchar(max)" />
-    <Property Name="SalaryMin" Type="money" />
-    <Property Name="SalaryMax" Type="money" />
+    <Property Name="SalaryMin" Type="decimal" Precision="19" Scale="4" />
+    <Property Name="SalaryMax" Type="decimal" Precision="19" Scale="4" />
     <Property Name="SalaryType" Type="int" Nullable="false" />
     <Property Name="MinWorkAuthorization" Type="int" />
   </EntityType>
@@ -77,7 +131,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="Jobs">
     <Key>
@@ -109,6 +163,20 @@
     <Property Name="JobId" Type="int" Nullable="false" />
     <Property Name="DateHired" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="Resume_Work_History">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="CompanyName" />
+      <PropertyRef Name="JobTitleName" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="JobTitleName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="ResumeId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Salary_Type">
     <Key>
       <PropertyRef Name="Id" />
@@ -123,6 +191,42 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Status" Type="varchar" MaxLength="25" />
   </EntityType>
+  <Association Name="FK__Employee___EmpId__05D8E0BE">
+    <End Role="Employee_Login" Type="Self.Employee_Login" Multiplicity="1" />
+    <End Role="Employee_Education" Type="Self.Employee_Education" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee_Login">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee_Education">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employee___EmpId__08B54D69">
+    <End Role="Employee_Login" Type="Self.Employee_Login" Multiplicity="1" />
+    <End Role="Employee_Associations_Clubs" Type="Self.Employee_Associations_Clubs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee_Login">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee_Associations_Clubs">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employee___EmpId__2180FB33">
+    <End Role="Employee_Login" Type="Self.Employee_Login" Multiplicity="1" />
+    <End Role="Employee_Resumes" Type="Self.Employee_Resumes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee_Login">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee_Resumes">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Employee___JobId__74AE54BC">
     <End Role="Jobs" Type="Self.Jobs" Multiplicity="1" />
     <End Role="Employee_Searches" Type="Self.Employee_Searches" Multiplicity="*" />
@@ -168,6 +272,30 @@
       </Principal>
       <Dependent Role="Employee_Details">
         <PropertyRef Name="LoginId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employee___Resum__49C3F6B7">
+    <End Role="Employee_Resumes" Type="Self.Employee_Resumes" Multiplicity="1" />
+    <End Role="Employee_Certification" Type="Self.Employee_Certification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee_Resumes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee_Certification">
+        <PropertyRef Name="ResumeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employee___Resum__4AB81AF0">
+    <End Role="Employee_Resumes" Type="Self.Employee_Resumes" Multiplicity="1" />
+    <End Role="Employee_Key_Skills" Type="Self.Employee_Key_Skills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee_Resumes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee_Key_Skills">
+        <PropertyRef Name="ResumeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -351,10 +479,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Resume_Wo__Resum__47DBAE45">
+    <End Role="Employee_Resumes" Type="Self.Employee_Resumes" Multiplicity="1" />
+    <End Role="Resume_Work_History" Type="Self.Resume_Work_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee_Resumes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Resume_Work_History">
+        <PropertyRef Name="ResumeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="JobSearchDBModelStoreContainer">
     <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee_Associations_Clubs" EntityType="Self.Employee_Associations_Clubs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee_Certification" EntityType="Self.Employee_Certification" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee_Details" EntityType="Self.Employee_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee_Education" EntityType="Self.Employee_Education" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee_Key_Skills" EntityType="Self.Employee_Key_Skills" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee_Login" EntityType="Self.Employee_Login" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee_Resumes" EntityType="Self.Employee_Resumes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee_Roles" EntityType="Self.Employee_Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee_Searches" EntityType="Self.Employee_Searches" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Job_Details" EntityType="Self.Job_Details" Schema="dbo" store:Type="Tables" />
@@ -363,8 +508,21 @@
     <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Jobs_Applied" EntityType="Self.Jobs_Applied" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Jobs_Hired" EntityType="Self.Jobs_Hired" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Resume_Work_History" EntityType="Self.Resume_Work_History" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Salary_Type" EntityType="Self.Salary_Type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Work_Authorization_Type" EntityType="Self.Work_Authorization_Type" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Employee___EmpId__05D8E0BE" Association="Self.FK__Employee___EmpId__05D8E0BE">
+      <End Role="Employee_Login" EntitySet="Employee_Login" />
+      <End Role="Employee_Education" EntitySet="Employee_Education" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employee___EmpId__08B54D69" Association="Self.FK__Employee___EmpId__08B54D69">
+      <End Role="Employee_Login" EntitySet="Employee_Login" />
+      <End Role="Employee_Associations_Clubs" EntitySet="Employee_Associations_Clubs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employee___EmpId__2180FB33" Association="Self.FK__Employee___EmpId__2180FB33">
+      <End Role="Employee_Login" EntitySet="Employee_Login" />
+      <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+    </AssociationSet>
     <AssociationSet Name="FK__Employee___JobId__74AE54BC" Association="Self.FK__Employee___JobId__74AE54BC">
       <End Role="Jobs" EntitySet="Jobs" />
       <End Role="Employee_Searches" EntitySet="Employee_Searches" />
@@ -380,6 +538,14 @@
     <AssociationSet Name="FK__Employee___Login__5070F446" Association="Self.FK__Employee___Login__5070F446">
       <End Role="Employee_Login" EntitySet="Employee_Login" />
       <End Role="Employee_Details" EntitySet="Employee_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employee___Resum__49C3F6B7" Association="Self.FK__Employee___Resum__49C3F6B7">
+      <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+      <End Role="Employee_Certification" EntitySet="Employee_Certification" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employee___Resum__4AB81AF0" Association="Self.FK__Employee___Resum__4AB81AF0">
+      <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+      <End Role="Employee_Key_Skills" EntitySet="Employee_Key_Skills" />
     </AssociationSet>
     <AssociationSet Name="FK__Employee___UserI__75A278F5" Association="Self.FK__Employee___UserI__75A278F5">
       <End Role="Employee_Login" EntitySet="Employee_Login" />
@@ -440,6 +606,10 @@
     <AssociationSet Name="FK__Jobs_Hire__JobId__6477ECF3" Association="Self.FK__Jobs_Hire__JobId__6477ECF3">
       <End Role="Jobs" EntitySet="Jobs" />
       <End Role="Jobs_Hired" EntitySet="Jobs_Hired" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Resume_Wo__Resum__47DBAE45" Association="Self.FK__Resume_Wo__Resum__47DBAE45">
+      <End Role="Employee_Resumes" EntitySet="Employee_Resumes" />
+      <End Role="Resume_Work_History" EntitySet="Resume_Work_History" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

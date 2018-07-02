@@ -1,5 +1,6 @@
 ﻿using JobSearch.Core.Contracts;
 using JobSearch.Data;
+using JobSearch.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -56,6 +57,12 @@ namespace JobSearch.Web.Controllers
             {
                 HttpContext.Current.Session["user"] = key;
             };
+        }
+
+        [HttpPost]
+        public void SubmitRegisterForm( UserModel FormModel )
+        {
+            _LoginTask.RegisterNewUser( FormModel ); 
         }
 
 

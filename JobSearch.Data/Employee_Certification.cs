@@ -17,5 +17,8 @@ namespace JobSearch.Data
         public System.Guid Id { get; set; }
         public string Certification { get; set; }
         public System.DateTime StartDate { get; set; }
+        public int ResumeId { get; set; }
+    
+        public virtual Employee_Resumes Employee_Resumes { get; set; }
     }
 }

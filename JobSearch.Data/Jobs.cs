@@ -29,6 +29,7 @@ namespace JobSearch.Data
         public int JobTypeId { get; set; }
         public int CompanyId { get; set; }
         public System.DateTime DatePosted { get; set; }
+        public System.Guid LocationId { get; set; }
     
         public virtual Companies Companies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

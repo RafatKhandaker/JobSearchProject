@@ -12,19 +12,18 @@ namespace JobSearch.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee_Details
+    public partial class Location_Address
     {
         public int Id { get; set; }
-        public int LoginId { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public int JobTitleId { get; set; }
-        public System.DateTime SignUpDate { get; set; }
-        public System.Guid LocationId { get; set; }
+        public string Street { get; set; }
+        public int ZipCode { get; set; }
+        public int City { get; set; }
+        public int State { get; set; }
+        public int Country { get; set; }
+        public System.Guid UniqueId { get; set; }
     
-        public virtual Job_Type Job_Type { get; set; }
-        public virtual Employee_Login Employee_Login { get; set; }
+        public virtual Reference_Country Reference_Country { get; set; }
+        public virtual Reference_State Reference_State { get; set; }
+        public virtual Reference_City Reference_City { get; set; }
     }
 }

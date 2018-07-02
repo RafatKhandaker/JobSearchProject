@@ -57,5 +57,31 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Scripts" />
+    <Folder Include="Schema" />
+    <Folder Include="Schema\Tables" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Schema\DB_Settings.sql" />
+    <None Include="Schema\Tables\Companies.sql" />
+    <None Include="Schema\Tables\Employee_Details.sql" />
+    <None Include="Schema\Tables\Employee_Login.sql" />
+    <None Include="Schema\Tables\Employee_Roles.sql" />
+    <None Include="Schema\Tables\Employee_Searches.sql" />
+    <None Include="Schema\Tables\Job_Details.sql" />
+    <None Include="Schema\Tables\Job_Type.sql" />
+    <None Include="Schema\Tables\Jobs.sql" />
+    <None Include="Schema\Tables\Jobs_Applied.sql" />
+    <None Include="Schema\Tables\Jobs_Hired.sql" />
+    <None Include="Schema\Tables\Salary_Type.sql" />
+    <None Include="Schema\Tables\Work_Authorization_Type.sql" />
+    <None Include="Scripts\Populate_JobTypes.sql" />
+    <None Include="Schema\Tables\Employoee_Association_Clubs.sql" />
+    <None Include="Schema\Tables\Resume_Work_History.sql" />
+    <None Include="Schema\Tables\Employee_Key_Skills.sql" />
+    <None Include="Schema\Tables\Employee_Education.sql" />
+    <None Include="Schema\Tables\Employee_Certification.sql" />
+    <None Include="Schema\Tables\Employee_Resumes.sql" />
+    <None Include="Schema\DB_Creation.sql" />
   </ItemGroup>
 </Project>

@@ -20,5 +20,8 @@ namespace JobSearch.Data
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Description { get; set; }
+        public int ResumeId { get; set; }
+    
+        public virtual Employee_Resumes Employee_Resumes { get; set; }
     }
 }

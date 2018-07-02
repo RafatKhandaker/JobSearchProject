@@ -14,6 +14,14 @@ namespace JobSearch.Data
     
     public partial class Employee_Resumes
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Employee_Resumes()
+        {
+            this.Employee_Certification = new HashSet<Employee_Certification>();
+            this.Employee_Key_Skills = new HashSet<Employee_Key_Skills>();
+            this.Resume_Work_History = new HashSet<Resume_Work_History>();
+        }
+    
         public int Id { get; set; }
         public int EmpId { get; set; }
         public string Summary { get; set; }
@@ -24,5 +32,11 @@ namespace JobSearch.Data
         public Nullable<System.Guid> CertificationId { get; set; }
     
         public virtual Employee_Login Employee_Login { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee_Certification> Employee_Certification { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee_Key_Skills> Employee_Key_Skills { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Resume_Work_History> Resume_Work_History { get; set; }
     }
 }
